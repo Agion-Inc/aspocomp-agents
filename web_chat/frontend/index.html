@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Agent Chat</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splash-screen">
+        <video class="splash-screen__video" id="splash-video" autoplay muted loop>
+            <source src="/videos/splash-screen.mp4" type="video/mp4">
+        </video>
+        <div class="splash-screen__content">
+            <h1 class="splash-screen__title">Gemini Agent Chat</h1>
+            <p class="splash-screen__subtitle">AI-Powered Conversational Interface</p>
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <!-- Header -->
+        <header class="chat-header">
+            <h1 class="chat-header__title">Gemini Agent Chat</h1>
+            <div class="chat-header__controls">
+                <select id="model-selector" class="chat-header__model-selector">
+                    <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                    <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+                </select>
+                <button id="settings-btn" class="chat-header__button" aria-label="Settings">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="10" cy="10" r="3"/>
+                        <path d="M10 1v4M10 15v4M19 10h-4M5 10H1M16.66 3.34l-2.83 2.83M6.17 13.83l-2.83 2.83M16.66 16.66l-2.83-2.83M6.17 6.17l-2.83-2.83"/>
+                    </svg>
+                </button>
+                <button id="clear-btn" class="chat-header__button" aria-label="Clear conversation">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 6h14M8 6V4a2 2 0 012-2h0a2 2 0 012 2v2m3 0v10a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Messages Container -->
+        <div class="messages-container" id="messages-container">
+            <div class="messages-container__empty" id="empty-message">
+                <p>Start a conversation by typing a message below.</p>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-area">
+            <div class="input-area__wrapper">
+                <textarea 
+                    id="message-input" 
+                    class="input-field" 
+                    placeholder="Type your message..."
+                    rows="1"
+                    aria-label="Message input"
+                ></textarea>
+                <button id="send-btn" class="button button--primary" aria-label="Send message" disabled>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 2L9 11M18 2l-7 17-3-7-7-3 17-7z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settings-modal" aria-hidden="true">
+        <div class="modal__overlay"></div>
+        <div class="modal__content">
+            <div class="modal__header">
+                <h2>Settings</h2>
+                <button class="modal__close" id="close-settings" aria-label="Close settings">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal__body">
+                <div class="setting">
+                    <label for="modal-model-selector">Model:</label>
+                    <select id="modal-model-selector" class="setting__input">
+                        <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                        <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+                    </select>
+                </div>
+                <div class="setting">
+                    <label>
+                        <input type="checkbox" id="mcp-enabled" class="setting__checkbox">
+                        Enable MCP tools
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
+

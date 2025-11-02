@@ -1,3 +1,51 @@
+- 2025-01-XX: Seedance Video Tool Integration & Splash Screen
+  - Integrated seedance_video tool into gemini_agent.py
+  - Added video display support in chat UI (HTML5 video player)
+  - Created splash screen with video background
+  - Generated splash screen video (abstract black & white patterns)
+  - Implemented video path extraction from messages and function calls
+  - Splash screen auto-hides after 3 seconds with smooth transition
+  - All video formats supported (.mp4, .webm, .mov, .avi)
+
+- 2025-01-XX: Image Tool Integration Complete
+  - Implemented automatic image display in chat messages
+  - Added image path extraction from message content and function call results
+  - Created image display components with click-to-open functionality
+  - Added image serving support in Flask backend (public directory)
+  - Tested with nano_banana_generate tool - images display correctly
+  - Images show in both message content and function call indicators
+  - Supports all image generation tools: nano_banana, gemini_image, openai_image
+
+- 2025-01-XX: Web UI Implementation - Backend & Frontend Complete
+  - Implemented backend API following TDD approach
+  - Created Flask app with health, models, chat, and conversation endpoints
+  - Implemented conversation manager for state management
+  - Integrated with gemini_agent.py module
+  - Created frontend with black & white theme
+  - Implemented HTML structure, CSS styling, and JavaScript functionality
+  - Added message rendering, function call indicators, and error handling
+  - All 47 backend tests passing
+  - Complete web UI ready for testing
+
+- 2025-01-XX: TDD Implementation Plan for Web UI
+  - Created comprehensive TDD-driven task list for iterative implementation
+  - Documented in `docs/tdd_implementation_plan.md`
+  - Plan includes 8 phases: Backend foundation, API endpoints, Frontend foundation, API client, UI components, Function calls, Integration, E2E testing
+  - Each task follows TDD cycle: Red (write test) → Green (implement) → Refactor
+  - Includes test specifications, implementation tasks, and validation steps
+  - Updated `docs/todo.md` with TDD-based task breakdown
+
+- 2025-01-XX: Web UI Design Documentation
+  - Created comprehensive design documentation for web chat interface
+  - Documented frontend architecture (HTML/CSS/JS) in `docs/frontend.md`
+  - Documented backend architecture (Flask API) in `docs/backend.md`
+  - Documented system architecture and integration in `docs/architecture.md`
+  - Created subsystem documentation in `docs/subsystems/web_chat.md`
+  - Added web UI development tasks to `docs/todo.md`
+  - Design includes modern chat UI with black & white theme, function call indicators, responsive design
+  - Backend integrates with existing `gemini_agent.py` module
+  - No implementation yet - documentation only per user request
+
 - 2025-08-29: Tools maintenance
   - Added tools/utils/download.ts for Replicate video tool
   - Fixed tools/gemini.ts to accept GEMINI_API_KEY fallback

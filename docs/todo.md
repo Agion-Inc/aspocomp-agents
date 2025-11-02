@@ -70,3 +70,42 @@ Refs:
   - gemini-image wrapper: ✅ updated to call Node tool; validated
   - generate-video: ❌ skipped per request (partial updates in place)
   - tools/gemini.py: ✅ rewritten to proxy to npm run gemini
+
+---
+
+## Web UI Development Plan
+
+10) Plan and design web UI for gemini_agent.py
+- status: ✅ done
+- notes: Created comprehensive documentation for frontend, backend, and architecture
+- docs: frontend.md, backend.md, architecture.md
+
+11) TDD Implementation Plan
+- status: ✅ done
+- notes: Created comprehensive TDD-driven task list for iterative implementation
+- docs: tdd_implementation_plan.md
+
+12) Implement Flask backend API (TDD)
+- status: ❌ not started
+- approach: Test-driven development
+- phases:
+  - Phase 1: Backend foundation & health check
+  - Phase 2: Backend API endpoints (models, chat, conversation)
+- see: docs/tdd_implementation_plan.md
+
+13) Implement frontend HTML/CSS/JS (TDD)
+- status: ❌ not started
+- approach: Test-driven development
+- phases:
+  - Phase 3: Frontend foundation (HTML/CSS)
+  - Phase 4: Frontend API client
+  - Phase 5: Frontend UI components
+  - Phase 6: Function call indicators
+  - Phase 7: Integration & polish
+- see: docs/tdd_implementation_plan.md
+
+14) Test web UI end-to-end
+- status: ❌ not started
+- approach: E2E testing with Playwright/Cypress
+- phase: Phase 8 in TDD plan
+- see: docs/tdd_implementation_plan.md

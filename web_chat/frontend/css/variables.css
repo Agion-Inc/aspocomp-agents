@@ -1,0 +1,53 @@
+/* CSS Variables for Black & White Theme */
+
+:root {
+    /* Colors - Monochrome Palette */
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-gray-dark: #333333;
+    --color-gray-medium: #666666;
+    --color-gray-light: #e5e5e5;
+    --color-gray-very-light: #f5f5f5;
+    --color-gray-ultra-light: #fafafa;
+    
+    /* Message Colors */
+    --color-user-bg: var(--color-black);
+    --color-user-text: var(--color-white);
+    --color-assistant-bg: var(--color-white);
+    --color-assistant-text: var(--color-black);
+    --color-assistant-border: var(--color-gray-light);
+    --color-function-call-bg: var(--color-gray-dark);
+    --color-function-call-text: var(--color-white);
+    
+    /* Background Colors */
+    --color-bg-primary: var(--color-white);
+    --color-bg-secondary: var(--color-gray-ultra-light);
+    --color-bg-hover: var(--color-gray-very-light);
+    
+    /* Border Colors */
+    --color-border: var(--color-gray-light);
+    
+    /* Shadow */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-family-mono: 'Courier New', monospace;
+    --font-size-base: 16px;
+    --font-size-small: 14px;
+    --font-size-large: 18px;
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    
+    /* Layout */
+    --container-max-width: 1200px;
+    --header-height: 64px;
+    --input-height: 80px;
+}
+

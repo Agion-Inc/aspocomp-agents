@@ -313,6 +313,19 @@ def build_cli_function_declarations() -> List[Dict[str, Any]]:
             },
         },
         {
+            "name": "seedance_video",
+            "description": "Generate cinematic AI videos using ByteDance's Seedance 1 Pro Fast model via npm script seedance-video",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "prompt": {"type": "string", "description": "Text description of the desired video"},
+                    "output": {"type": "string", "description": "Output filename"},
+                    "folder": {"type": "string", "description": "Output folder path", "default": "public/videos"},
+                },
+                "required": ["prompt"],
+            },
+        },
+        {
             "name": "semantic_search",
             "description": "Search ChromaDB using Gemini embeddings for semantic similarity via npm script semantic-search",
             "parameters": {
@@ -563,6 +576,15 @@ def execute_cli_function(name: str, args: Dict[str, Any]) -> Dict[str, Any]:
             cmd += ["--min-distance", str(args["min_distance"])]
         if args.get("max_distance") is not None:
             cmd += ["--max-distance", str(args["max_distance"])]
+        code, out, err = _run_cmd(cmd)
+        return {"ok": code == 0, "stdout": out, "stderr": err, "cmd": cmd}
+
+    if name == "seedance_video":
+        cmd = ["npm", "run", "seedance-video", "--", "-p", args.get("prompt", "")]
+        if args.get("output"):
+            cmd += ["-o", args["output"]]
+        if args.get("folder"):
+            cmd += ["-f", args["folder"]]
         code, out, err = _run_cmd(cmd)
         return {"ok": code == 0, "stdout": out, "stderr": err, "cmd": cmd}
 

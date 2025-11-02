@@ -113,6 +113,30 @@ npm run nano-banana -- -p "A futuristic car" -o car.png
 npm run nano-banana -- -p "Add flames" -i car.png -o car-flames.png
 ```
 
+## Video Generation
+
+### Seedance 1 Pro Fast
+Generate cinematic AI videos using ByteDance's Seedance 1 Pro Fast model (optimized for faster inference and lower cost):
+```bash
+npm run seedance-video -- -p "high speed supercar driving on the beach at sunset"
+npm run seedance-video -- -p "A futuristic cityscape at night" -o my-video.mp4
+npm run seedance-video -- -p "Aerial view of mountains" -f public/videos
+```
+
+**Options:**
+- `-p, --prompt`: Text description of the desired video (required)
+- `-o, --output`: Output filename (default: `seedance-{timestamp}.mp4`)
+- `-f, --folder`: Output folder path (default: `public/videos`)
+
+**Requirements:**
+- `REPLICATE_API_TOKEN` in `.env.local` file
+
+### General Video Generation
+For other video generation models (Kling, Minimax, Hunyuan, Mochi, LTX), use:
+```bash
+npm run generate-video -- -p "Your video prompt" -m kling-1.6
+```
+
 ## Search Tool
 Perform Google searches with grounding:
 ```bash
