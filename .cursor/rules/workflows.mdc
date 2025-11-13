@@ -125,6 +125,24 @@ Define high-level tasks. Follow the `## Request Processing Steps` below to execu
       5. **Testing:** Ensure the feature is tested, potentially using the `<validate>` workflow.
   </implement_ai>
 
+  <implement_agent>
+    - **Goal:** Implement a new specialized AI agent for the Aspocomp agents framework.
+    - **Steps:**
+      1. **Fetch Rule:** Fetch `implement_agent.mdc` rule using `fetch_rules` to get comprehensive implementation guidelines.
+      2. **Research:** Read `docs/agents_framework.md` and `docs/aspocomp_brand_domain.md` to understand framework and domain context.
+      3. **Plan:** Define agent purpose, capabilities, and required tools. Document the plan.
+      4. **Create Structure:** Create agent directory structure following the pattern in `implement_agent.mdc`.
+      5. **Implement:** Follow the step-by-step implementation guide in `implement_agent.mdc`:
+         - Create `config.py` with agent configuration
+         - Create `prompts/system_prompt.txt` following Aspocomp brand guidelines
+         - Implement `agent.py` inheriting from `BaseAgent`
+         - Create agent-specific tools if needed
+      6. **Test:** Write and run unit tests, then integration tests with the web chat system.
+      7. **Document:** Create `README.md` in agent directory and `docs/agents/[agent_name].md` following documentation requirements.
+      8. **Integrate:** Register agent with the framework and verify routing works correctly.
+      9. **Validate:** Complete all checklists from `implement_agent.mdc` before considering complete.
+  </implement_agent>
+
   <localize>
     - **Goal:** Create or update translations for the application with natural, culturally appropriate phrasing.
     - **Steps:**

@@ -53,6 +53,41 @@ Modern chat interface for the Gemini Agent CLI, providing a web-based user exper
 
 ## Views/Screens
 
+### Agent Listing Page
+**Purpose**: Main page listing all available AI agents
+
+**Location**: `web_chat/frontend/agents/index.html`
+
+**Components**:
+1. **Header**
+   - Title: "Aspocomp AI Agents"
+   - Subtitle: Brief description
+
+2. **Agent Cards**
+   - Grid layout of agent cards
+   - Each card shows:
+     - Agent name
+     - Agent description
+     - Status (Available, Coming Soon, etc.)
+     - Link to agent UI
+
+3. **Navigation**
+   - Link back to main chat (if applicable)
+
+**See**: `docs/agent_ui_pattern.md` for detailed agent UI pattern
+
+### Agent-Specific UIs
+
+Each agent can have its own custom UI:
+
+- **Chat-based**: Conversational interface (e.g., Sales Agent)
+- **Form-based**: Structured form (e.g., Initiative Assistant)
+- **Custom**: Unique UI pattern
+
+**Location**: `web_chat/frontend/agents/[agent_name]/`
+
+**See**: `docs/agent_ui_pattern.md` for implementation details
+
 ### Main Chat View
 **Purpose**: Primary interface for conversation with Gemini Agent
 

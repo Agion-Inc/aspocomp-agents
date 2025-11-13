@@ -1,0 +1,535 @@
+---
+description: Guidelines and workflow for implementing a new AI agent for the Aspocomp agents framework
+globs:
+  - "agents/**/*.py"
+  - "agents/**/*.md"
+  - "docs/agents/*.md"
+alwaysApply: false
+---
+
+# Implementing a New AI Agent
+
+This rule provides step-by-step guidance for creating a new specialized AI agent in the Aspocomp agents framework.
+
+## Prerequisites
+
+Before implementing a new agent, ensure you have:
+1. Read `docs/agent_requirements.md` - General requirements for all agents
+2. Read `docs/agents_framework.md` - Framework architecture and design
+3. Read `docs/aspocomp_brand_domain.md` - Aspocomp brand, domain knowledge, and terminology
+4. Reviewed existing agent implementations (if any) in `agents/` directory
+5. Understood the base agent interface from `agents/base/agent_base.py`
+
+## Implementation Workflow
+
+### Phase 1: Planning and Design
+
+1. **Review Requirements**
+   - Read `docs/agent_requirements.md` for general requirements
+   - Understand performance requirements (response time <3s)
+   - Understand security requirements (SSO, encryption, GDPR)
+   - Understand language support requirements (Finnish, English)
+   - Plan for document retrieval capabilities
+   - Plan for feedback mechanism
+
+2. **Define Agent Purpose**
+   - Identify the specific business function the agent will serve
+   - Determine the agent's primary capabilities and use cases
+   - Reference `docs/aspocomp_brand_domain.md` for domain context
+   - Consider how the agent fits into the overall Aspocomp customer journey
+   - Define what the agent will NOT do (limitations)
+
+3. **Design Agent Capabilities**
+   - List specific functions the agent should perform
+   - Identify required tools/functions the agent needs
+   - Define the agent's knowledge boundaries
+   - Plan integration points with other systems (if needed)
+   - Plan document retrieval from PDF, Word, intranet, training portal
+   - Plan context recognition (department, role, situation)
+
+4. **Create Agent Documentation Plan**
+   - Plan the agent documentation structure
+   - Identify examples and use cases to document
+   - Plan system prompt content
+   - Plan acceptance criteria (90% understanding, 4/5 satisfaction)
+
+### Phase 2: Directory Structure Setup
+
+Create the following directory structure for the new agent:
+
+```
+agents/[agent_name]/
+├── README.md              # Agent overview and quick start
+├── agent.py              # Main agent implementation
+├── config.py             # Agent configuration
+├── database.py           # Database operations (if agent needs database)
+├── models.py             # Data models/schemas (if agent needs database)
+├── prompts/
+│   └── system_prompt.txt # Agent-specific system prompt
+├── tools/                # Agent-specific tools (if any)
+│   ├── __init__.py
+│   └── [tool_name].py
+└── tests/                # Agent-specific tests
+    ├── __init__.py
+    └── test_[agent_name]_agent.py
+
+data/[agent_name]/        # Agent database (if needed)
+└── [database].db         # SQLite database (development)
+
+web_chat/frontend/agents/[agent_name]/  # Agent UI (if needed)
+├── index.html            # Agent UI HTML
+├── css/
+│   └── styles.css       # Agent-specific styles
+└── js/
+    ├── app.js           # UI logic
+    └── api.js           # API integration
+```
+
+**Implementation Steps:**
+- Use `list_dir` to check existing agent structure
+- Use `write` to create directory structure and initial files
+- Follow naming conventions: use snake_case for directory and file names
+- If agent needs database: create `data/[agent_name]/` directory
+- If agent needs UI: create `web_chat/frontend/agents/[agent_name]/` directory
+
+### Phase 3: Agent Implementation
+
+#### 3.1 Create Configuration File (`config.py`)
+
+```python
+AGENT_CONFIG = {
+    "agent_id": "[agent_name]",  # Unique identifier (snake_case)
+    "name": "[Display Name]",     # Human-readable name
+    "description": "[Brief description of agent purpose]",
+    "enabled": True,              # Enable/disable agent
+    "model": "gemini-2.5-flash",  # Gemini model to use
+    "temperature": 0.7,           # Model temperature (0.0-1.0)
+    "max_iterations": 3,          # Max function call iterations
+    "tools": [                     # List of tool names this agent uses
+        "tool_name_1",
+        "tool_name_2"
+    ],
+    "system_prompt_path": "agents/[agent_name]/prompts/system_prompt.txt"
+}
+```
+
+**Requirements:**
+- Agent ID must be unique across all agents
+- Use descriptive name and description
+- Set appropriate temperature for agent's use case (lower for factual, higher for creative)
+- List all tools the agent will use
+
+#### 3.2 Create System Prompt (`prompts/system_prompt.txt`)
+
+**Guidelines:**
+- Reference `docs/aspocomp_brand_domain.md` for brand voice and terminology
+- Include agent's specific role and responsibilities
+- Define agent's knowledge boundaries
+- Include examples of good responses
+- Use Aspocomp brand voice: professional, helpful, reliable, precise, collaborative
+- Include domain-specific terminology from Aspocomp context
+- Specify how to handle questions outside agent's scope
+
+**Prompt Structure:**
+```
+You are the [Agent Name] for Aspocomp, a Finnish PCB manufacturer...
+
+ROLE AND RESPONSIBILITIES:
+- [Specific responsibility 1]
+- [Specific responsibility 2]
+...
+
+BRAND VOICE:
+- Professional and technically accurate
+- Helpful and customer-focused
+- Clear and precise communication
+...
+
+CAPABILITIES:
+- [Capability 1]
+- [Capability 2]
+...
+
+LIMITATIONS:
+- [What the agent should NOT do]
+- [When to defer to other agents or human support]
+...
+
+EXAMPLES:
+[Include 2-3 example interactions]
+```
+
+#### 3.3 Implement Agent Class (`agent.py`)
+
+**Required Implementation:**
+
+```python
+from agents.base.agent_base import BaseAgent
+from agents.[agent_name].config import AGENT_CONFIG
+import os
+
+class [AgentName]Agent(BaseAgent):
+    """[Agent description]"""
+    
+    def __init__(self, config: dict = None):
+        """Initialize the agent with configuration"""
+        super().__init__(config or AGENT_CONFIG)
+        # Agent-specific initialization
+    
+    async def process_message(
+        self, 
+        message: str, 
+        conversation_id: str,
+        context: dict = None
+    ) -> dict:
+        """
+        Process a user message and return response
+        
+        Args:
+            message: User's message
+            conversation_id: Conversation identifier
+            context: Additional context (user info, session data, etc.)
+        
+        Returns:
+            {
+                "response": str,
+                "agent_id": str,
+                "function_calls": list,
+                "metadata": dict
+            }
+        """
+        # Load system prompt
+        system_prompt = self.get_system_prompt()
+        
+        # Build conversation history
+        # Process with Gemini API
+        # Handle function calls
+        # Return formatted response
+    
+    def get_capabilities(self) -> dict:
+        """Return agent capabilities and supported functions"""
+        return {
+            "agent_id": self.config["agent_id"],
+            "name": self.config["name"],
+            "description": self.config["description"],
+            "tools": self.config.get("tools", []),
+            "capabilities": [
+                # List of specific capabilities
+            ]
+        }
+    
+    def get_system_prompt(self) -> str:
+        """Load and return agent-specific system prompt"""
+        prompt_path = self.config.get("system_prompt_path")
+        if prompt_path and os.path.exists(prompt_path):
+            with open(prompt_path, 'r', encoding='utf-8') as f:
+                return f.read()
+        return ""
+    
+    def is_enabled(self) -> bool:
+        """Check if agent is enabled"""
+        return self.config.get("enabled", False)
+```
+
+**Implementation Requirements:**
+- Inherit from `BaseAgent`
+- Implement all required methods
+- Handle errors gracefully
+- Log important events
+- Follow async/await patterns for API calls
+- Use existing `gemini_agent.py` patterns for Gemini integration
+
+#### 3.4 Create Agent-Specific Tools (if needed)
+
+If the agent needs custom tools not available in the main framework:
+
+1. Create tool files in `agents/[agent_name]/tools/`
+2. Follow existing tool patterns from `tools/` directory
+3. Document tool parameters and return values
+4. Include error handling
+5. Register tools in agent configuration
+6. Tools can interact with agent's database (if applicable)
+7. Tools should respect privacy (not expose personal information to LLM)
+
+#### 3.5 Create Database and Data Models (if needed)
+
+If the agent needs its own database:
+
+1. **Create Database Module** (`database.py`):
+   - Initialize database schema
+   - Implement CRUD operations
+   - Handle both SQLite (development) and SharePoint (production)
+
+2. **Create Data Models** (`models.py`):
+   - Define data classes/schemas
+   - Include privacy filtering methods
+   - Separate personal and non-personal information
+
+3. **Database Location**:
+   - Development: `data/[agent_name]/[database].db` (SQLite)
+   - Production: SharePoint lists/databases
+
+4. **Privacy Pattern**:
+   - Store personal information in database
+   - **DO NOT** expose personal information to LLM
+   - Use `to_dict(include_personal=False)` when passing to LLM
+
+See `docs/agent_database_pattern.md` for detailed database pattern.
+
+#### 3.6 Create User Interface (if needed)
+
+If the agent needs its own UI:
+
+1. **Choose UI Pattern**:
+   - **Chat-based**: Conversational interface (for conversational agents)
+   - **Form-based**: Structured form (for data collection agents)
+   - **Custom**: Unique UI pattern (for specialized agents)
+
+2. **Create UI Directory**:
+   - Location: `web_chat/frontend/agents/[agent_name]/`
+   - Create `index.html`, `css/styles.css`, `js/app.js`, `js/api.js`
+
+3. **Implement UI**:
+   - Use shared CSS variables from `web_chat/frontend/css/variables.css`
+   - Follow Aspocomp brand guidelines
+   - Ensure responsive design
+   - Add navigation back to agent list
+
+4. **API Integration**:
+   - Call agent endpoint: `/api/chat/[agent_id]`
+   - Handle responses and errors
+   - Implement conversation management
+
+5. **Add to Agent List**:
+   - Update `web_chat/frontend/agents/index.html`
+   - Add agent card with description and link
+
+See `docs/agent_ui_pattern.md` for detailed UI pattern.
+
+### Phase 4: Testing
+
+#### 4.1 Unit Tests
+
+Create comprehensive unit tests in `tests/test_[agent_name]_agent.py`:
+
+```python
+import unittest
+from agents.[agent_name].agent import [AgentName]Agent
+
+class Test[AgentName]Agent(unittest.TestCase):
+    def setUp(self):
+        self.agent = [AgentName]Agent()
+    
+    def test_agent_initialization(self):
+        """Test agent initializes correctly"""
+        self.assertIsNotNone(self.agent)
+        self.assertTrue(self.agent.is_enabled())
+    
+    def test_get_capabilities(self):
+        """Test agent returns capabilities"""
+        capabilities = self.agent.get_capabilities()
+        self.assertIn("agent_id", capabilities)
+        self.assertIn("name", capabilities)
+    
+    def test_system_prompt_loading(self):
+        """Test system prompt loads correctly"""
+        prompt = self.agent.get_system_prompt()
+        self.assertIsInstance(prompt, str)
+        self.assertGreater(len(prompt), 0)
+    
+    # Add more tests for agent-specific functionality
+```
+
+**Test Requirements:**
+- Test agent initialization
+- Test capability reporting
+- Test system prompt loading
+- Test message processing (with mocks)
+- Test error handling
+- Test tool execution (if applicable)
+
+#### 4.2 Integration Tests
+
+Test agent integration with web chat:
+- Test agent registration
+- Test message routing to agent
+- Test response formatting
+- Test conversation continuity
+
+### Phase 5: Documentation
+
+#### 5.1 Agent README (`agents/[agent_name]/README.md`)
+
+Include:
+- Agent overview and purpose
+- Quick start guide
+- Configuration options
+- Available tools
+- Usage examples
+- Troubleshooting
+
+#### 5.2 Agent Documentation (`docs/agents/[agent_name].md`)
+
+Follow the template structure:
+
+```markdown
+# [Agent Name] Agent
+
+## Overview
+[Purpose and role of the agent]
+
+## Capabilities
+[List of specific capabilities]
+
+## Configuration
+[Configuration options and settings]
+
+## System Prompt
+[Overview of system prompt design and key elements]
+
+## Tools
+[Documentation of agent-specific tools]
+
+## Integration
+[How the agent integrates with the main system]
+
+## Examples
+[Example interactions and use cases]
+
+## Testing
+[Testing strategies and examples]
+
+## Troubleshooting
+[Common issues and solutions]
+```
+
+**Documentation Requirements:**
+- Reference `docs/aspocomp_brand_domain.md` for domain context
+- Include practical examples
+- Document all configuration options
+- Explain system prompt design decisions
+- Provide troubleshooting guidance
+
+### Phase 6: Integration with Framework
+
+#### 6.1 Register Agent
+
+1. Ensure agent follows base interface
+2. Agent will be auto-discovered by agent registry
+3. Verify agent appears in agent list
+4. Test agent routing
+
+#### 6.2 Update Framework Documentation
+
+- Update `docs/agents/README.md` to include new agent
+- Add agent to framework overview if needed
+- Update implementation plan if applicable
+
+### Phase 7: Validation and Review
+
+Before considering the agent complete:
+
+1. **Code Review Checklist:**
+   - [ ] Follows base agent interface
+   - [ ] Proper error handling
+   - [ ] Logging implemented
+   - [ ] Code follows project style guidelines
+   - [ ] No hardcoded values (use configuration)
+
+2. **Documentation Checklist:**
+   - [ ] README.md complete
+   - [ ] docs/agents/[agent_name].md complete
+   - [ ] System prompt documented
+   - [ ] Tools documented
+   - [ ] Examples provided
+
+3. **Testing Checklist:**
+   - [ ] Unit tests pass
+   - [ ] Integration tests pass
+   - [ ] Manual testing completed
+   - [ ] Error scenarios tested
+
+4. **Integration Checklist:**
+   - [ ] Agent registered successfully
+   - [ ] Message routing works
+   - [ ] Response formatting correct
+   - [ ] Conversation continuity works
+
+## Best Practices
+
+### System Prompt Design
+- **Be Specific**: Clearly define agent's role and boundaries
+- **Use Brand Voice**: Follow Aspocomp brand guidelines
+- **Include Examples**: Show expected interaction patterns
+- **Handle Edge Cases**: Specify what to do when uncertain
+- **Reference Domain Knowledge**: Use Aspocomp terminology correctly
+
+### Code Quality
+- **Follow Patterns**: Use existing code patterns from framework
+- **Error Handling**: Always handle errors gracefully
+- **Logging**: Log important events for debugging
+- **Configuration**: Make behavior configurable, not hardcoded
+- **Documentation**: Comment complex logic
+
+### Testing
+- **Comprehensive**: Test happy paths and error cases
+- **Isolated**: Tests should not depend on external services
+- **Fast**: Use mocks for slow operations
+- **Maintainable**: Keep tests simple and readable
+
+### Integration
+- **Consistent Interface**: Follow base agent interface exactly
+- **Error Responses**: Return consistent error format
+- **Metadata**: Include useful metadata in responses
+- **Performance**: Consider response time and resource usage
+
+## Common Pitfalls to Avoid
+
+1. **Hardcoding Values**: Use configuration files, not hardcoded values
+2. **Ignoring Brand Voice**: Always follow Aspocomp brand guidelines
+3. **Incomplete Error Handling**: Handle all error scenarios
+4. **Missing Documentation**: Document all aspects of the agent
+5. **Skipping Tests**: Write tests before considering complete
+6. **Tight Coupling**: Keep agents independent
+7. **Ignoring Domain Knowledge**: Reference Aspocomp domain documentation
+
+## Requirements Compliance
+
+All agents must comply with the general requirements in `docs/agent_requirements.md`:
+
+- **Performance**: Response time under 3 seconds
+- **Availability**: 24/7 operation
+- **Security**: SSO authentication, encrypted communication, GDPR compliance
+- **Language**: Support Finnish and English
+- **Document Retrieval**: Support PDF, Word, intranet pages, training portal
+- **Context Recognition**: Adapt to user's department, role, situation
+- **Feedback**: User feedback mechanism
+- **Logging**: Comprehensive logging for analytics
+- **Acceptance Criteria**: 90% understanding accuracy, 4/5 user satisfaction
+
+## References
+
+- **Agent Requirements**: `docs/agent_requirements.md` - General requirements for all agents
+- **Database Pattern**: `docs/agent_database_pattern.md` - Database and data model pattern
+- **UI Pattern**: `docs/agent_ui_pattern.md` - User interface pattern
+- **Framework Architecture**: `docs/agents_framework.md`
+- **Brand & Domain**: `docs/aspocomp_brand_domain.md`
+- **Implementation Plan**: `docs/agents_implementation_plan.md`
+- **Base Agent**: `agents/base/agent_base.py`
+- **System Architecture**: `docs/architecture.md`
+- **Backend API**: `docs/backend.md`
+- **Frontend Documentation**: `docs/frontend.md`
+
+## Workflow Integration
+
+When implementing a new agent, follow this workflow:
+
+1. **Research Phase**: Read framework and domain documentation
+2. **Design Phase**: Plan agent capabilities and structure
+3. **Develop Phase**: Implement agent following this rule
+4. **Test Phase**: Write and run tests
+5. **Document Phase**: Create comprehensive documentation
+6. **Integrate Phase**: Register and test with framework
+7. **Validate Phase**: Complete checklists and review
+
+Use the `<develop>` workflow for implementation, `<validate>` workflow for testing, and `<document>` workflow for documentation.

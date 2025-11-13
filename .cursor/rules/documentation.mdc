@@ -14,10 +14,15 @@ alwaysApply: true
     - `todo.md`: Task list (✅ done, ⏳ in progress, ❌ not started). Update status, don't remove tasks.
     - `ai_changelog.md`: Log of changes made by AI. Add concise summaries here.
     - `learnings.md`: Technical learnings, best practices, error solutions. Add new findings here.
+    - `agent_requirements.md`: General requirements for all AI agents (performance, security, GDPR, language support, etc.).
+    - `agent_list.md`: Complete catalog of all planned AI agents organized by category and priority.
+    - `agent_database_pattern.md`: Pattern for agents with databases (SQLite development, SharePoint production, privacy considerations).
+    - `agent_ui_pattern.md`: Pattern for agent user interfaces (chat, form, custom UIs, agent listing page).
 
   ## Subfolders under the docs folder to update software subsystem decomposition and sw design patterns
     - patterns: folder that contains software pattern for implementing certain kind of parts in the system. Use these always to get up to date information about how to implement features.
-    - subsystems: folder that contains subsystem descriptions and links to the files belonging to a subsystem. Use these to document and understand about the details of single subsystems and to evaluate the relations between the componenents. 
+    - subsystems: folder that contains subsystem descriptions and links to the files belonging to a subsystem. Use these to document and understand about the details of single subsystems and to evaluate the relations between the componenents.
+    - agents: folder that contains documentation for each AI agent in the system. Each agent should have its own documentation file describing its purpose, capabilities, integration points, and configuration. Use these to understand agent-specific functionality and how agents connect to the main web chat system. 
 
   ## important files at root folder   
     - `package.json`: List of used npm packages and versions.

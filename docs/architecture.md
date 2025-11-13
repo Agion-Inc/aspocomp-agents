@@ -293,3 +293,32 @@ python-dotenv>=1.0.0
 - Dark mode
 - Customizable themes
 
+## AI Agents Framework
+
+The system is being extended to support multiple specialized AI agents for Aspocomp business functions. See:
+
+- **Agent Requirements**: `docs/agent_requirements.md` - General requirements for all agents (performance, security, GDPR, etc.)
+- **Agent List**: `docs/agent_list.md` - Complete catalog of 23 planned agents by category
+- **Framework Architecture**: `docs/agents_framework.md` - Overall framework design
+- **Implementation Plan**: `docs/agents_implementation_plan.md` - Detailed implementation roadmap
+- **Brand & Domain**: `docs/aspocomp_brand_domain.md` - Aspocomp-specific knowledge
+- **Agent Documentation**: `docs/agents/` - Individual agent documentation
+
+### Agent Architecture
+- Each agent operates independently in `agents/[agent_name]/`
+- Agents integrate with main web chat via agent registry and router
+- Base agent infrastructure provides common interface and utilities
+- Agents can be enabled/disabled independently
+- **23 agents planned** across 6 categories: Sales & Trading, Manufacturing & Production, Operations & Logistics, Quality & Technical, Administrative, Integration & Automation
+
+### Agent Requirements
+All agents must meet general requirements including:
+- **Performance**: Response time under 3 seconds
+- **Availability**: 24/7 operation
+- **Security**: SSO authentication, encrypted communication, GDPR compliance
+- **Language**: Support Finnish and English
+- **Document Retrieval**: Support PDF, Word, intranet pages, training portal
+- **Acceptance Criteria**: 90% understanding accuracy, 4/5 user satisfaction
+
+See `docs/agents_framework.md` for complete architecture details, `docs/agent_list.md` for the complete agent catalog, and `docs/agent_requirements.md` for detailed requirements.
+
