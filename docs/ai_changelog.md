@@ -46,6 +46,29 @@
   - Backend integrates with existing `gemini_agent.py` module
   - No implementation yet - documentation only per user request
 
+- 2025-01-XX: Initiative Assistant Agent Implementation
+  - Created first AI agent in the Aspocomp agents framework
+  - Implemented complete agent structure: config, models, database, tools, agent class
+  - Created SQLite database for initiatives (development) with proper schema
+  - Implemented 4 agent tools: save_initiative, search_similar_initiatives, get_initiative_details, save_feedback
+  - Created chat-based UI for the agent at web_chat/frontend/agents/initiative_assistant/
+  - Integrated agent with backend API: /api/chat/initiative_assistant endpoint
+  - Created agent registry system for discovering and managing agents
+  - Created agent listing page at web_chat/frontend/agents/index.html
+  - Implemented privacy pattern: personal information stored but not exposed to LLM
+  - Added comprehensive unit tests for agent functionality
+  - Agent ready for testing and use
+
+- 2025-01-XX: Agents Framework Documentation
+  - Created comprehensive framework documentation (docs/agents_framework.md)
+  - Created agent requirements specification (docs/agent_requirements.md)
+  - Created agent database pattern documentation (docs/agent_database_pattern.md)
+  - Created agent UI pattern documentation (docs/agent_ui_pattern.md)
+  - Created complete agent list with 23 planned agents (docs/agent_list.md)
+  - Created Aspocomp brand and domain documentation (docs/aspocomp_brand_domain.md)
+  - Created agent implementation guide (.cursor/rules/implement_agent.mdc)
+  - Updated all documentation to reference agents framework
+
 - 2025-08-29: Tools maintenance
   - Added tools/utils/download.ts for Replicate video tool
   - Fixed tools/gemini.ts to accept GEMINI_API_KEY fallback

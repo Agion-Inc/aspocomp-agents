@@ -109,3 +109,31 @@ Refs:
 - approach: E2E testing with Playwright/Cypress
 - phase: Phase 8 in TDD plan
 - see: docs/tdd_implementation_plan.md
+
+---
+
+## Agents Framework Development
+
+15) Agents Framework Documentation
+- status: ✅ done
+- notes: Created comprehensive framework documentation, requirements, patterns, and agent list
+- docs: agents_framework.md, agent_requirements.md, agent_database_pattern.md, agent_ui_pattern.md, agent_list.md
+
+16) Initiative Assistant Agent Implementation
+- status: ✅ done
+- notes: First agent fully implemented with database, tools, UI, and backend integration
+- components:
+  - Agent structure: config, models, database, tools, agent class
+  - Database: SQLite (development) with proper schema
+  - Tools: save_initiative, search_similar_initiatives, get_initiative_details, save_feedback
+  - UI: Chat-based interface at web_chat/frontend/agents/initiative_assistant/
+  - Backend: /api/chat/initiative_assistant endpoint integrated
+  - Agent registry: System for discovering and managing agents
+  - Agent listing: Main page at web_chat/frontend/agents/index.html
+  - Tests: Unit tests implemented and passing
+- ready for: Testing and use
+
+17) Additional Agents Implementation
+- status: ❌ not started
+- next agents: Sales Agent, Work Instructions Assistant Agent
+- see: docs/agents_implementation_plan.md

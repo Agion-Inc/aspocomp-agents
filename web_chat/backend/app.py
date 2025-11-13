@@ -14,6 +14,7 @@ from web_chat.backend import config
 from web_chat.backend.errors import APIError, InvalidRequestError, ConversationNotFoundError
 from web_chat.backend.chat_service import send_message
 from web_chat.backend.conversation_manager import clear_conversation, get_conversation
+from web_chat.backend.agent_registry import get_registry
 
 
 def create_app():
@@ -70,7 +71,8 @@ def create_app():
                 raise InvalidRequestError("Message field is required")
             
             message = data['message']
-            model = data.get('model', 'gemini-2.5-flash')
+            # Always use gemini-2.5-flash for chat
+            model = 'gemini-2.5-flash'
             mcp_enabled = data.get('mcp_enabled', False)
             conversation_id = data.get('conversation_id')
             
@@ -97,6 +99,54 @@ def create_app():
                 'success': True,
                 'message': 'Conversation cleared'
             })
+        except APIError as e:
+            raise e
+        except Exception as e:
+            raise APIError(str(e), "INTERNAL_ERROR", 500)
+    
+    @app.route('/api/agents', methods=['GET'])
+    def list_agents():
+        """List all available agents."""
+        try:
+            registry = get_registry()
+            agents = registry.list_agents()
+            
+            return jsonify({
+                'success': True,
+                'agents': agents
+            })
+        except Exception as e:
+            raise APIError(str(e), "INTERNAL_ERROR", 500)
+    
+    @app.route('/api/chat/<agent_id>', methods=['POST'])
+    def chat_agent(agent_id):
+        """Send a message to a specific agent."""
+        try:
+            if not request.is_json:
+                raise InvalidRequestError("Request must be JSON")
+            
+            data = request.get_json()
+            if not data or 'message' not in data:
+                raise InvalidRequestError("Message field is required")
+            
+            message = data['message']
+            conversation_id = data.get('conversation_id')
+            context = data.get('context', {})
+            
+            # Get agent from registry
+            registry = get_registry()
+            agent = registry.get_agent(agent_id)
+            
+            if not agent:
+                raise APIError(f"Agent '{agent_id}' not found", "AGENT_NOT_FOUND", 404)
+            
+            if not agent.is_enabled():
+                raise APIError(f"Agent '{agent_id}' is disabled", "AGENT_DISABLED", 403)
+            
+            # Process message with agent
+            result = asyncio.run(agent.process_message(message, conversation_id, context))
+            
+            return jsonify(result)
         except APIError as e:
             raise e
         except Exception as e:
@@ -142,6 +192,52 @@ if __name__ == '__main__':
     def index():
         frontend_dir = os.path.join(os.path.dirname(__file__), '../frontend')
         return send_from_directory(frontend_dir, 'index.html')
+    
+    @app.route('/agents/')
+    def agents_index():
+        """Serve agent listing page."""
+        frontend_dir = os.path.join(os.path.dirname(__file__), '../frontend')
+        agents_dir = os.path.join(frontend_dir, 'agents')
+        return send_from_directory(agents_dir, 'index.html')
+    
+    @app.route('/agents/<path:path>')
+    def serve_agent_static(path):
+        """Serve agent-specific static files."""
+        frontend_dir = os.path.join(os.path.dirname(__file__), '../frontend')
+        agents_dir = os.path.join(frontend_dir, 'agents')
+        
+        # Remove trailing slash if present
+        clean_path = path.rstrip('/')
+        
+        # If path is empty or just an agent name, serve index.html from that agent directory
+        if not clean_path or '/' not in clean_path:
+            agent_dir = os.path.join(agents_dir, clean_path) if clean_path else agents_dir
+            index_path = os.path.join(agent_dir, 'index.html')
+            if os.path.exists(index_path):
+                return send_from_directory(agent_dir, 'index.html')
+            # Fallback to agent listing
+            return send_from_directory(agents_dir, 'index.html')
+        
+        # Split path into agent name and file path
+        parts = clean_path.split('/', 1)
+        agent_name = parts[0]
+        file_path = parts[1] if len(parts) > 1 else 'index.html'
+        
+        agent_dir = os.path.join(agents_dir, agent_name)
+        full_file_path = os.path.join(agent_dir, file_path)
+        
+        # Check if file exists in agent directory
+        if os.path.exists(full_file_path) and os.path.isfile(full_file_path):
+            return send_from_directory(agent_dir, file_path)
+        
+        # If it's a directory request, try index.html
+        if os.path.isdir(os.path.join(agent_dir, file_path)):
+            index_path = os.path.join(agent_dir, file_path, 'index.html')
+            if os.path.exists(index_path):
+                return send_from_directory(os.path.join(agent_dir, file_path), 'index.html')
+        
+        # Fallback to agent listing
+        return send_from_directory(agents_dir, 'index.html')
     
     @app.route('/<path:path>')
     def serve_static(path):

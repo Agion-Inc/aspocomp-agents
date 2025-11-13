@@ -1,0 +1,135 @@
+/* Agent Listing Page Styles */
+
+.agent-list-container {
+    min-height: 100vh;
+    background-color: var(--color-bg-primary);
+}
+
+.agent-list-header {
+    padding: var(--spacing-xl) var(--spacing-lg);
+    text-align: center;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-primary);
+}
+
+.agent-list-header h1 {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--color-black);
+    margin-bottom: var(--spacing-sm);
+}
+
+.agent-list-subtitle {
+    color: var(--color-gray-medium);
+    font-size: var(--font-size-base);
+    margin: 0;
+}
+
+.agent-list-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+.agent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.agent-card {
+    background-color: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.agent-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-black);
+}
+
+.agent-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-md);
+}
+
+.agent-card__title {
+    font-size: var(--font-size-large);
+    font-weight: 600;
+    color: var(--color-black);
+    margin: 0;
+}
+
+.agent-card__status {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 4px;
+    font-size: var(--font-size-small);
+    font-weight: 500;
+}
+
+.agent-card__status--available {
+    background-color: var(--color-gray-ultra-light);
+    color: var(--color-black);
+}
+
+.agent-card__status--disabled {
+    background-color: var(--color-gray-light);
+    color: var(--color-gray-medium);
+}
+
+.agent-card__description {
+    color: var(--color-gray-medium);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+}
+
+.agent-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--color-black);
+    font-weight: 500;
+    text-decoration: none;
+    margin-top: var(--spacing-md);
+}
+
+.agent-card__link:hover {
+    text-decoration: underline;
+}
+
+.loading-card {
+    text-align: center;
+    color: var(--color-gray-medium);
+    cursor: default;
+}
+
+.loading-card:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .agent-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .agent-list-header {
+        padding: var(--spacing-lg);
+    }
+    
+    .agent-list-header h1 {
+        font-size: 24px;
+    }
+}
+
