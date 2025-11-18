@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Initiative Assistant - Admin</title>
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/agents/initiative_assistant/admin/css/styles.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-container">
+            <h1>Initiative Assistant Admin</h1>
+            <p class="login-subtitle">Kirjaudu sisään hallintapaneeliin</p>
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="password">Salasana</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                </div>
+                <div id="login-error" class="error-message" style="display: none;"></div>
+                <button type="submit" class="btn btn-primary">Kirjaudu sisään</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Interface -->
+    <div id="admin-interface" class="admin-interface" style="display: none;">
+        <header class="admin-header">
+            <h1>Initiative Assistant - Hallintapaneeli</h1>
+            <button id="logout-btn" class="btn btn-secondary">Kirjaudu ulos</button>
+        </header>
+
+        <main class="admin-main">
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-initiatives">-</div>
+                    <div class="stat-label">Yhteensä aloitteita</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="proposed-initiatives">-</div>
+                    <div class="stat-label">Ehdotettu</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="in-progress-initiatives">-</div>
+                    <div class="stat-label">Käynnissä</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="completed-initiatives">-</div>
+                    <div class="stat-label">Valmis</div>
+                </div>
+            </div>
+
+            <div class="admin-controls">
+                <div class="search-filter">
+                    <input type="text" id="search-input" placeholder="Etsi aloitteita..." class="search-input">
+                    <select id="status-filter" class="status-filter">
+                        <option value="">Kaikki tilat</option>
+                        <option value="proposed">Ehdotettu</option>
+                        <option value="in_progress">Käynnissä</option>
+                        <option value="completed">Valmis</option>
+                        <option value="cancelled">Peruutettu</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="loading-indicator" class="loading-indicator" style="display: none;">
+                <div class="spinner"></div>
+                <p>Ladataan aloitteita...</p>
+            </div>
+
+            <div id="initiatives-list" class="initiatives-list"></div>
+
+            <div id="no-initiatives" class="no-initiatives" style="display: none;">
+                <p>Ei aloitteita löytynyt.</p>
+            </div>
+        </main>
+
+        <!-- Initiative Detail Modal -->
+        <div id="initiative-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-title">Aloitteen tiedot</h2>
+                    <button class="modal-close" id="modal-close">&times;</button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button id="save-initiative-btn" class="btn btn-primary">Tallenna muutokset</button>
+                    <button id="delete-initiative-btn" class="btn btn-danger">Poista aloite</button>
+                    <button id="cancel-modal-btn" class="btn btn-secondary">Sulje</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/agents/initiative_assistant/admin/js/api.js"></script>
+    <script src="/agents/initiative_assistant/admin/js/app.js"></script>
+</body>
+</html>
+

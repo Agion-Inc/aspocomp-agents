@@ -6,7 +6,7 @@ import os
 project_root = os.path.join(os.path.dirname(__file__), '../..')
 sys.path.insert(0, os.path.abspath(project_root))
 
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory, make_response
 from flask_cors import CORS
 from datetime import datetime
 import asyncio
@@ -15,18 +15,28 @@ from web_chat.backend.errors import APIError, InvalidRequestError, ConversationN
 from web_chat.backend.chat_service import send_message
 from web_chat.backend.conversation_manager import clear_conversation, get_conversation
 from web_chat.backend.agent_registry import get_registry
+from web_chat.backend.auth import login, require_auth, destroy_session, validate_session
 
 
 def create_app():
     """Create and configure Flask application."""
     app = Flask(__name__)
     
+    # Set secret key for sessions
+    app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'dev-secret-key-change-in-production')
+    
     # Configure CORS - allow all origins for development
     CORS(app, resources={
         r"/api/*": {
             "origins": "*",
-            "methods": ["GET", "POST", "DELETE", "OPTIONS"],
-            "allow_headers": ["Content-Type"]
+            "methods": ["GET", "POST", "DELETE", "OPTIONS", "PUT"],
+            "allow_headers": ["Content-Type", "X-Session-Token"]
+        },
+        r"/admin/api/*": {
+            "origins": "*",
+            "methods": ["GET", "POST", "DELETE", "OPTIONS", "PUT"],
+            "allow_headers": ["Content-Type", "X-Session-Token"],
+            "supports_credentials": True
         }
     })
     
@@ -152,6 +162,218 @@ def create_app():
         except Exception as e:
             raise APIError(str(e), "INTERNAL_ERROR", 500)
     
+    # Admin API endpoints
+    @app.route('/admin/api/login', methods=['POST'])
+    def admin_login():
+        """Admin login endpoint."""
+        try:
+            if not request.is_json:
+                raise InvalidRequestError("Request must be JSON")
+            
+            data = request.get_json()
+            password = data.get('password')
+            
+            if not password:
+                raise InvalidRequestError("Password is required")
+            
+            session_token = login(password)
+            
+            if not session_token:
+                return jsonify({
+                    'success': False,
+                    'error': 'Invalid password',
+                    'error_code': 'INVALID_CREDENTIALS'
+                }), 401
+            
+            response = make_response(jsonify({
+                'success': True,
+                'message': 'Login successful',
+                'token': session_token
+            }))
+            
+            # Set cookie
+            response.set_cookie('admin_session', session_token, httponly=True, samesite='Lax', max_age=3600*24)  # 24 hours
+            
+            return response
+        except APIError as e:
+            raise e
+        except Exception as e:
+            raise APIError(str(e), "INTERNAL_ERROR", 500)
+    
+    @app.route('/admin/api/logout', methods=['POST'])
+    @require_auth
+    def admin_logout():
+        """Admin logout endpoint."""
+        try:
+            token = request.headers.get('X-Session-Token') or request.cookies.get('admin_session')
+            destroy_session(token)
+            
+            response = make_response(jsonify({
+                'success': True,
+                'message': 'Logged out successfully'
+            }))
+            response.set_cookie('admin_session', '', expires=0)
+            
+            return response
+        except Exception as e:
+            raise APIError(str(e), "INTERNAL_ERROR", 500)
+    
+    @app.route('/admin/api/initiatives', methods=['GET'])
+    @require_auth
+    def admin_list_initiatives():
+        """List all initiatives for admin."""
+        try:
+            from agents.initiative_assistant.database import InitiativeDatabase
+            
+            db = InitiativeDatabase()
+            initiatives = db.get_all_initiatives(include_personal=True, limit=1000)
+            
+            # Convert to dict format
+            initiatives_list = []
+            for init in initiatives:
+                initiatives_list.append({
+                    'id': init.id,
+                    'title': init.title,
+                    'description': init.description,
+                    'creator_name': init.creator_name,
+                    'creator_department': init.creator_department,
+                    'creator_email': init.creator_email,
+                    'creator_contact': init.creator_contact,
+                    'goals': init.goals,
+                    'related_processes': init.related_processes,
+                    'expected_outcomes': init.expected_outcomes,
+                    'status': init.status,
+                    'created_at': init.created_at.isoformat() if init.created_at else None,
+                    'updated_at': init.updated_at.isoformat() if init.updated_at else None,
+                    'feedback_count': init.feedback_count,
+                    'similarity_checked': init.similarity_checked
+                })
+            
+            return jsonify({
+                'success': True,
+                'initiatives': initiatives_list,
+                'count': len(initiatives_list)
+            })
+        except Exception as e:
+            raise APIError(str(e), "INTERNAL_ERROR", 500)
+    
+    @app.route('/admin/api/initiatives/<int:initiative_id>', methods=['GET'])
+    @require_auth
+    def admin_get_initiative(initiative_id):
+        """Get a specific initiative."""
+        try:
+            from agents.initiative_assistant.database import InitiativeDatabase
+            
+            db = InitiativeDatabase()
+            initiative = db.get_initiative(initiative_id, include_personal=True)
+            
+            if not initiative:
+                raise APIError(f"Initiative {initiative_id} not found", "NOT_FOUND", 404)
+            
+            return jsonify({
+                'success': True,
+                'initiative': {
+                    'id': initiative.id,
+                    'title': initiative.title,
+                    'description': initiative.description,
+                    'creator_name': initiative.creator_name,
+                    'creator_department': initiative.creator_department,
+                    'creator_email': initiative.creator_email,
+                    'creator_contact': initiative.creator_contact,
+                    'goals': initiative.goals,
+                    'related_processes': initiative.related_processes,
+                    'expected_outcomes': initiative.expected_outcomes,
+                    'status': initiative.status,
+                    'created_at': initiative.created_at.isoformat() if initiative.created_at else None,
+                    'updated_at': initiative.updated_at.isoformat() if initiative.updated_at else None,
+                    'feedback_count': initiative.feedback_count,
+                    'similarity_checked': initiative.similarity_checked
+                }
+            })
+        except APIError as e:
+            raise e
+        except Exception as e:
+            raise APIError(str(e), "INTERNAL_ERROR", 500)
+    
+    @app.route('/admin/api/initiatives/<int:initiative_id>', methods=['PUT'])
+    @require_auth
+    def admin_update_initiative(initiative_id):
+        """Update an initiative."""
+        try:
+            if not request.is_json:
+                raise InvalidRequestError("Request must be JSON")
+            
+            from agents.initiative_assistant.database import InitiativeDatabase
+            from agents.initiative_assistant.models import Initiative
+            
+            db = InitiativeDatabase()
+            existing = db.get_initiative(initiative_id, include_personal=True)
+            
+            if not existing:
+                raise APIError(f"Initiative {initiative_id} not found", "NOT_FOUND", 404)
+            
+            data = request.get_json()
+            
+            # Update fields
+            if 'title' in data:
+                existing.title = data['title']
+            if 'description' in data:
+                existing.description = data['description']
+            if 'status' in data:
+                existing.status = data['status']
+            if 'goals' in data:
+                existing.goals = data['goals']
+            if 'related_processes' in data:
+                existing.related_processes = data['related_processes']
+            if 'expected_outcomes' in data:
+                existing.expected_outcomes = data['expected_outcomes']
+            
+            # Update timestamp
+            from datetime import datetime
+            existing.updated_at = datetime.now()
+            
+            db.save_initiative(existing)
+            
+            return jsonify({
+                'success': True,
+                'message': 'Initiative updated successfully',
+                'initiative_id': initiative_id
+            })
+        except APIError as e:
+            raise e
+        except Exception as e:
+            raise APIError(str(e), "INTERNAL_ERROR", 500)
+    
+    @app.route('/admin/api/initiatives/<int:initiative_id>', methods=['DELETE'])
+    @require_auth
+    def admin_delete_initiative(initiative_id):
+        """Delete an initiative."""
+        try:
+            import sqlite3
+            from agents.initiative_assistant.database import InitiativeDatabase
+            
+            db = InitiativeDatabase()
+            initiative = db.get_initiative(initiative_id, include_personal=True)
+            
+            if not initiative:
+                raise APIError(f"Initiative {initiative_id} not found", "NOT_FOUND", 404)
+            
+            # Delete from database
+            conn = sqlite3.connect(db.db_path)
+            cursor = conn.cursor()
+            cursor.execute('DELETE FROM initiatives WHERE id = ?', (initiative_id,))
+            conn.commit()
+            conn.close()
+            
+            return jsonify({
+                'success': True,
+                'message': 'Initiative deleted successfully'
+            })
+        except APIError as e:
+            raise e
+        except Exception as e:
+            raise APIError(str(e), "INTERNAL_ERROR", 500)
+    
     @app.errorhandler(APIError)
     def handle_api_error(error):
         """Handle API errors."""
@@ -199,6 +421,32 @@ if __name__ == '__main__':
         frontend_dir = os.path.join(os.path.dirname(__file__), '../frontend')
         agents_dir = os.path.join(frontend_dir, 'agents')
         return send_from_directory(agents_dir, 'index.html')
+    
+    @app.route('/agents/initiative_assistant/admin/')
+    def admin_index():
+        """Serve admin interface for initiative assistant."""
+        frontend_dir = os.path.join(os.path.dirname(__file__), '../frontend')
+        agents_dir = os.path.join(frontend_dir, 'agents')
+        admin_dir = os.path.join(agents_dir, 'initiative_assistant', 'admin')
+        return send_from_directory(admin_dir, 'index.html')
+    
+    @app.route('/agents/initiative_assistant/admin/<path:path>')
+    def serve_admin_static(path):
+        """Serve admin static files for initiative assistant."""
+        frontend_dir = os.path.join(os.path.dirname(__file__), '../frontend')
+        agents_dir = os.path.join(frontend_dir, 'agents')
+        admin_dir = os.path.join(agents_dir, 'initiative_assistant', 'admin')
+        
+        # If it's a request for index.html, serve it
+        if path == 'index.html' or path == '':
+            return send_from_directory(admin_dir, 'index.html')
+        
+        # Try to serve the file
+        try:
+            return send_from_directory(admin_dir, path)
+        except:
+            # Fallback to index.html
+            return send_from_directory(admin_dir, 'index.html')
     
     @app.route('/agents/<path:path>')
     def serve_agent_static(path):

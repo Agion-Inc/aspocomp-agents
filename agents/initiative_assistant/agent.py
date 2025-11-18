@@ -14,6 +14,7 @@ from google.genai import types
 
 from .config import AGENT_CONFIG
 from . import tools
+from web_chat.backend.conversation_manager import get_conversation, add_message
 
 
 class InitiativeAssistantAgent:
@@ -243,15 +244,57 @@ class InitiativeAssistantAgent:
         # Build tools
         agent_tools = self.build_tools()
         
-        # Build conversation contents
-        contents = [
-            types.Content(role="user", parts=[types.Part(text=system_prompt)]),
-            types.Content(
-                role="model",
-                parts=[types.Part(text="I understand. I'm ready to help you create initiatives and check for duplicates. What would you like to do?")]
-            ),
-            types.Content(role="user", parts=[types.Part(text=message)])
-        ]
+        # Ensure conversation exists and store user message
+        from web_chat.backend.conversation_manager import create_conversation
+        if not conversation_id:
+            conversation_id = create_conversation()
+        
+        # Store user message in conversation history BEFORE retrieving history
+        try:
+            add_message(conversation_id, 'user', message)
+        except ValueError:
+            # Conversation doesn't exist, create it
+            conversation_id = create_conversation()
+            add_message(conversation_id, 'user', message)
+        
+        # Build conversation contents with history
+        contents = []
+        
+        # Get conversation with updated history (includes current user message)
+        conversation = get_conversation(conversation_id)
+        history_messages = conversation.get('messages', []) if conversation else []
+        
+        # Check if this is a new conversation (only has the user message we just added)
+        is_new_conversation = len(history_messages) == 1
+        
+        if is_new_conversation:
+            # Initialize with system prompt for new conversations
+            contents = [
+                types.Content(role="user", parts=[types.Part(text=system_prompt)]),
+                types.Content(
+                    role="model",
+                    parts=[types.Part(text="I understand. I'm ready to help you create initiatives and check for duplicates. What would you like to do?")]
+                ),
+                types.Content(role="user", parts=[types.Part(text=message)])
+            ]
+        else:
+            # For existing conversations, build history from stored messages
+            # Include all previous messages except the last one (which is the current message we just added)
+            # We'll add the current message separately to ensure proper ordering
+            previous_messages = history_messages[:-1]  # All except the last (current) message
+            
+            for msg in previous_messages:
+                role = msg.get('role')
+                content = msg.get('content', '')
+                
+                if role == 'user':
+                    contents.append(types.Content(role="user", parts=[types.Part(text=content)]))
+                elif role == 'assistant':
+                    contents.append(types.Content(role="model", parts=[types.Part(text=content)]))
+                # Note: tool responses are handled separately during function call iterations
+            
+            # Add current user message
+            contents.append(types.Content(role="user", parts=[types.Part(text=message)]))
         
         # Configure generation
         gen_config = types.GenerateContentConfig(
@@ -325,6 +368,14 @@ class InitiativeAssistantAgent:
                 result_data = fc.get("result", {}).get("data", {})
                 similar = result_data.get("similar_initiatives", [])
                 metadata["similar_initiatives_found"] = similar
+        
+        # Store assistant response in conversation history
+        # (User message was already stored above)
+        try:
+            add_message(conversation_id, 'assistant', response_text)
+        except ValueError:
+            # Should not happen as we created conversation above, but handle gracefully
+            pass
         
         return {
             "success": True,

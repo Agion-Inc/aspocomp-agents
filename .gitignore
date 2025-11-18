@@ -3,3 +3,10 @@ chroma.log
 .env.*
 node_modules
 .venv311
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
