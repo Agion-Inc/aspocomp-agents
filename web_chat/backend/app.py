@@ -132,16 +132,40 @@ def create_app():
     def chat_agent(agent_id):
         """Send a message to a specific agent."""
         try:
-            if not request.is_json:
-                raise InvalidRequestError("Request must be JSON")
+            # Handle both JSON and form data (for file uploads)
+            if request.is_json:
+                data = request.get_json()
+            else:
+                # Handle form data
+                data = {
+                    'message': request.form.get('message', ''),
+                    'conversation_id': request.form.get('conversation_id'),
+                    'context': {}
+                }
+                # Handle files if present
+                if 'files' in request.files:
+                    files = request.files.getlist('files')
+                    data['files'] = []
+                    for file in files:
+                        import base64
+                        file_content = file.read()
+                        data['files'].append({
+                            'filename': file.filename,
+                            'content': base64.b64encode(file_content).decode('utf-8'),
+                            'file_type': 'other'
+                        })
             
-            data = request.get_json()
             if not data or 'message' not in data:
                 raise InvalidRequestError("Message field is required")
             
             message = data['message']
             conversation_id = data.get('conversation_id')
             context = data.get('context', {})
+            files = data.get('files', [])
+            
+            # Add files to context if present
+            if files:
+                context['files'] = files
             
             # Get agent from registry
             registry = get_registry()

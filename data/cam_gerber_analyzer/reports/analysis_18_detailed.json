@@ -1,0 +1,176 @@
+{
+  "analysis_id": 18,
+  "file_format": "gerber",
+  "file_count": 13,
+  "total_size_mb": 1.72,
+  "file_types": {
+    "solder_mask_top": 2,
+    "silk_bottom": 1,
+    "drill": 2,
+    "inner_layer_1": 1,
+    "inner_layer_2": 1,
+    "inner_layer_3": 1,
+    "inner_layer_4": 1,
+    "plating": 1,
+    "outline": 1,
+    "paste_top": 1,
+    "silk_top": 1
+  },
+  "board_width": 22.3,
+  "board_height": 11.27,
+  "layer_count": 6,
+  "panel_count": 1,
+  "boards_per_panel": 1,
+  "total_boards": 1,
+  "is_panelized": false,
+  "parsed_files_count": 13,
+  "status": "completed",
+  "layer_details": {
+    "solder_mask_top": {
+      "primitives_count": 0,
+      "apertures_count": 0,
+      "statements_count": 0,
+      "lines_count": 0,
+      "arcs_count": 0,
+      "regions_count": 0,
+      "min_aperture_size": null,
+      "max_aperture_size": null,
+      "avg_aperture_size": null,
+      "aperture_sizes": []
+    },
+    "silk_bottom": {
+      "primitives_count": 0,
+      "apertures_count": 0,
+      "statements_count": 0,
+      "lines_count": 0,
+      "arcs_count": 0,
+      "regions_count": 0,
+      "min_aperture_size": null,
+      "max_aperture_size": null,
+      "avg_aperture_size": null,
+      "aperture_sizes": []
+    },
+    "inner_layer_1": {
+      "primitives_count": 0,
+      "apertures_count": 0,
+      "statements_count": 0,
+      "lines_count": 0,
+      "arcs_count": 0,
+      "regions_count": 0,
+      "min_aperture_size": null,
+      "max_aperture_size": null,
+      "avg_aperture_size": null,
+      "aperture_sizes": []
+    },
+    "inner_layer_2": {
+      "primitives_count": 0,
+      "apertures_count": 0,
+      "statements_count": 0,
+      "lines_count": 0,
+      "arcs_count": 0,
+      "regions_count": 0,
+      "min_aperture_size": null,
+      "max_aperture_size": null,
+      "avg_aperture_size": null,
+      "aperture_sizes": []
+    },
+    "inner_layer_3": {
+      "primitives_count": 0,
+      "apertures_count": 0,
+      "statements_count": 0,
+      "lines_count": 0,
+      "arcs_count": 0,
+      "regions_count": 0,
+      "min_aperture_size": null,
+      "max_aperture_size": null,
+      "avg_aperture_size": null,
+      "aperture_sizes": []
+    },
+    "inner_layer_4": {
+      "primitives_count": 0,
+      "apertures_count": 0,
+      "statements_count": 0,
+      "lines_count": 0,
+      "arcs_count": 0,
+      "regions_count": 0,
+      "min_aperture_size": null,
+      "max_aperture_size": null,
+      "avg_aperture_size": null,
+      "aperture_sizes": []
+    },
+    "plating": {
+      "primitives_count": 0,
+      "apertures_count": 0,
+      "statements_count": 0,
+      "lines_count": 0,
+      "arcs_count": 0,
+      "regions_count": 0,
+      "min_aperture_size": null,
+      "max_aperture_size": null,
+      "avg_aperture_size": null,
+      "aperture_sizes": []
+    },
+    "outline": {
+      "primitives_count": 0,
+      "apertures_count": 0,
+      "statements_count": 0,
+      "lines_count": 0,
+      "arcs_count": 0,
+      "regions_count": 0,
+      "min_aperture_size": null,
+      "max_aperture_size": null,
+      "avg_aperture_size": null,
+      "aperture_sizes": []
+    },
+    "paste_top": {
+      "primitives_count": 0,
+      "apertures_count": 0,
+      "statements_count": 0,
+      "lines_count": 0,
+      "arcs_count": 0,
+      "regions_count": 0,
+      "min_aperture_size": null,
+      "max_aperture_size": null,
+      "avg_aperture_size": null,
+      "aperture_sizes": []
+    },
+    "silk_top": {
+      "primitives_count": 0,
+      "apertures_count": 0,
+      "statements_count": 0,
+      "lines_count": 0,
+      "arcs_count": 0,
+      "regions_count": 0,
+      "min_aperture_size": null,
+      "max_aperture_size": null,
+      "avg_aperture_size": null,
+      "aperture_sizes": []
+    }
+  },
+  "drill_statistics": {
+    "drill": {
+      "total_holes": 178,
+      "tools_count": 3,
+      "min_hole_size_mm": 0.29972,
+      "max_hole_size_mm": 0.8000999999999999,
+      "unique_hole_sizes": 3,
+      "hole_sizes_mm": [
+        0.29972,
+        0.5003799999999999,
+        0.8000999999999999
+      ],
+      "hole_counts_by_size": {
+        "0.0118": 150,
+        "0.0197": 22,
+        "0.0315": 6
+      }
+    }
+  },
+  "aperture_statistics": {},
+  "total_vias": 200,
+  "total_pads": 0,
+  "total_holes": 200,
+  "board_thickness": null,
+  "laminate_type": null,
+  "surface_finish": null
+}

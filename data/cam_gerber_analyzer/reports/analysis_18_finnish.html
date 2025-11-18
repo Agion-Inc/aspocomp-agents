@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCB Analyysiraportti - Analysis 18</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #ecf0f1;
+            border-left: 5px solid #3498db;
+            border-radius: 5px;
+            font-size: 1.5em;
+        }
+        .answer-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .answer-box .question {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        .answer-box .answer {
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .answer-box .unit {
+            font-size: 0.6em;
+            opacity: 0.8;
+        }
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        .details-table th {
+            background: #34495e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .details-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        .details-table tr:hover {
+            background: #f8f9fa;
+        }
+        .info-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .info-section h3 {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .info-section p {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 PCB Analyysiraportti</h1>
+        
+        <div style="margin-bottom: 30px;">
+            <p><strong>Analyysi ID:</strong> 18</p>
+            <p><strong>Projekti:</strong> Hydra105</p>
+            <p><strong>Piirilevy:</strong> Hydra105</p>
+            <p><strong>Luotu:</strong> 2025-11-18 11:53:11</p>
+        </div>
+        
+        <h2>1. Kuinka monta kerrosta?</h2>
+        <div class="answer-box">
+            <div class="question">Kerrosten määrä:</div>
+            <div class="answer">6 <span class="unit">kerrosta</span></div>
+        </div>
+        
+        <div class="info-section">
+            <h3>Kerrosrakenne:</h3>
+            <p>• <strong>Yläkerros:</strong> Yläsivu (Top Layer)</p>
+            <p>• <strong>Sisäkerros 1:</strong> 1. sisäkerros</p>
+            <p>• <strong>Sisäkerros 2:</strong> 2. sisäkerros</p>
+            <p>• <strong>Sisäkerros 3:</strong> 3. sisäkerros</p>
+            <p>• <strong>Sisäkerros 4:</strong> 4. sisäkerros</p>
+            <p>• <strong>Alakerros:</strong> Alasivu (Bottom Layer)</p>
+            <p><strong>Yhteensä:</strong> 6 kerrosta (ylä + 4 sisäkerrosta + ala)</p>
+
+        </div>
+        
+        <h2>2. Minimi eristeväli, johdinleveys ja kaulus</h2>
+
+        <div class="answer-box">
+            <div class="question">Minimi johdinleveys:</div>
+            <div class="answer">0.051 <span class="unit">mm</span></div>
+        </div>
+        
+        <div class="answer-box">
+            <div class="question">Minimi eristeväli:</div>
+            <div class="answer">0.061 <span class="unit">mm</span></div>
+        </div>
+        
+        <div class="answer-box">
+            <div class="question">Minimi kaulus:</div>
+            <div class="answer">0.046 <span class="unit">mm</span></div>
+        </div>
+        
+        <div class="info-section">
+            <h3>Mittausyksityiskohdat:</h3>
+
+            <table class="details-table">
+                <thead>
+                    <tr>
+                        <th>Kerros</th>
+                        <th>Johdinleveys (mm)</th>
+                        <th>Eristeväli (mm)</th>
+                        <th>Kaulus (mm)</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>inner_layer_1</td>
+                        <td>0.084</td>
+                        <td>0.101</td>
+                        <td>0.046</td>
+                    </tr>
+
+                    <tr>
+                        <td>inner_layer_2</td>
+                        <td>0.201</td>
+                        <td>0.241</td>
+                        <td>0.201</td>
+                    </tr>
+
+                    <tr>
+                        <td>inner_layer_3</td>
+                        <td>0.051</td>
+                        <td>0.061</td>
+                        <td>0.1</td>
+                    </tr>
+
+                    <tr>
+                        <td>inner_layer_4</td>
+                        <td>0.201</td>
+                        <td>0.241</td>
+                        <td>0.15</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+        
+        <h2>3. Porauksien määrä</h2>
+        <div class="answer-box">
+            <div class="question">Porauksien kokonaismäärä:</div>
+            <div class="answer">178 <span class="unit">poraa</span></div>
+        </div>
+        
+        <div class="info-section">
+            <h3>Porausyksityiskohdat:</h3>
+            <table class="details-table">
+                <thead>
+                    <tr>
+                        <th>Porausaineisto</th>
+                        <th>Porauksia</th>
+                        <th>Porauskoko (mm)</th>
+                        <th>Työkaluja</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>drill</td>
+                        <td><strong>178</strong></td>
+                        <td>0.300 - 0.800 (0.300, 0.500, 0.800)</td>
+                        <td>3</td>
+                    </tr>
+
+                </tbody>
+            </table>
+            
+            <h3 style="margin-top: 20px;">Yhteenveto:</h3>
+            <p>• <strong>Platoidut reiät:</strong> 0 kpl</p>
+            <p>• <strong>Ei-platoidut reiät:</strong> 0 kpl</p>
+            <p>• <strong>Kokonaismäärä:</strong> 178 poraa</p>
+        </div>
+        
+        <div style="margin-top: 40px; padding: 20px; background: #ecf0f1; border-radius: 5px;">
+            <h3>Lisätietoja:</h3>
+            <p><strong>Piirilevyn koko:</strong> 22.3mm × 11.27mm</p>
+            <p><strong>Analysoituja tiedostoja:</strong> 13 kpl</p>
+            <p><strong>Tiedostojen kokonaiskoko:</strong> 1.72 MB</p>
+        </div>
+    </div>
+</body>
+</html>
