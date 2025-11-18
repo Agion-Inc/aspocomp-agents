@@ -1,14 +1,26 @@
 """Configuration module for web chat backend."""
 
 import os
+import sys
 from typing import Optional
+
+
+def get_project_root() -> str:
+    """Get the project root directory."""
+    # Get the directory where this file is located
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    # Go up two levels: web_chat/backend -> web_chat -> project root
+    project_root = os.path.join(current_dir, '../..')
+    return os.path.abspath(project_root)
 
 
 def load_env_files() -> None:
     """Load environment variables from .env.local and .env files."""
+    project_root = get_project_root()
     for filename in (".env.local", ".env"):
+        filepath = os.path.join(project_root, filename)
         try:
-            with open(filename, "r", encoding="utf-8") as f:
+            with open(filepath, "r", encoding="utf-8") as f:
                 for raw in f:
                     line = raw.strip()
                     if not line or line.startswith("#"):

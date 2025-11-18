@@ -74,16 +74,28 @@ async function handleSend() {
         // Send message to agent
         const response = await sendMessage(message, appState.conversationId);
         
+        // Remove loading indicator
+        removeMessage(loadingId);
+        
+        // Check if response indicates an error
+        if (!response.success) {
+            const errorMessage = response.error || 'Tuntematon virhe';
+            addMessage('assistant', `Virhe: ${errorMessage}`);
+            return;
+        }
+        
         // Update conversation ID
         if (response.conversation_id) {
             appState.conversationId = response.conversation_id;
         }
         
-        // Remove loading indicator
-        removeMessage(loadingId);
-        
-        // Add assistant response
-        addMessage('assistant', response.response);
+        // Add assistant response (handle both response.response and response.text for compatibility)
+        const responseText = response.response || response.text || '';
+        if (responseText) {
+            addMessage('assistant', responseText);
+        } else {
+            addMessage('assistant', 'Vastaus on tyhjä. Yritä uudelleen.');
+        }
         
         // Show similar initiatives if found
         if (response.metadata && response.metadata.similar_initiatives_found) {
