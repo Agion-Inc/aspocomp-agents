@@ -1,0 +1,453 @@
+[
+  {
+    "success": true,
+    "filename": "Hydra105_bot_stop.ger",
+    "file_type": "solder_mask_top",
+    "file_size_bytes": 1616,
+    "file_size_kb": 1.58,
+    "total_lines": 94,
+    "total_characters": 1523,
+    "format": "RS-274X",
+    "units": "IN",
+    "aperture_definitions": 10,
+    "draw_commands_sample": 63,
+    "flash_commands": 51,
+    "move_commands": 6,
+    "llm_analysis": {
+      "layer_purpose": "Top solder mask layer (solder stop)",
+      "manufacturing_function": "Defines areas where solder mask should NOT be applied (exposes pads)",
+      "key_characteristics": [
+        "Pad openings",
+        "Via openings",
+        "Solder mask clearance",
+        "10 aperture definitions",
+        "12 draw commands (sample)",
+        "51 flash commands (pads)"
+      ],
+      "manufacturing_processes": [
+        "Solder mask application",
+        "UV curing",
+        "Development"
+      ],
+      "file_category": "solder_mask",
+      "notable_features": "RS-274X format, 1523 characters analyzed"
+    }
+  },
+  {
+    "success": true,
+    "filename": "Hydra105_bottom_silk.ger",
+    "file_type": "silk_bottom",
+    "file_size_bytes": 213141,
+    "file_size_kb": 208.15,
+    "total_lines": 10996,
+    "total_characters": 202146,
+    "format": "RS-274X",
+    "units": "IN",
+    "aperture_definitions": 201,
+    "draw_commands_sample": 0,
+    "flash_commands": 0,
+    "move_commands": 0,
+    "llm_analysis": {
+      "layer_purpose": "Bottom silkscreen layer",
+      "manufacturing_function": "Defines component labels, reference designators, and markings printed on PCB",
+      "key_characteristics": [
+        "Component labels",
+        "Reference designators",
+        "Text markings",
+        "Logo/Graphics",
+        "201 aperture definitions"
+      ],
+      "manufacturing_processes": [
+        "Screen printing",
+        "Ink application"
+      ],
+      "file_category": "silkscreen",
+      "notable_features": "RS-274X format, 5000 characters analyzed"
+    }
+  },
+  {
+    "filename": "Hydra105_drills_NP.exc",
+    "file_type": "drill",
+    "file_size_kb": 0.41,
+    "format": "Excellon",
+    "drill_data": {
+      "success": true,
+      "file_path": "/Users/pasivuorio/agion/aspocomp-agents/agents/cam_gerber_analyzer/tools/../../../data/cam_gerber_analyzer/uploads/18/Hydra105_drills_NP.exc",
+      "file_size": 422,
+      "format": "Excellon",
+      "units": "IN",
+      "tools_count": 5,
+      "tools": {
+        "01": 0.0236,
+        "02": 0.1181,
+        "03": 0.122,
+        "04": 0.1575,
+        "05": 0.1969
+      },
+      "total_holes": 22,
+      "holes_by_tool": {
+        "01": 16,
+        "02": 2,
+        "03": 4,
+        "04": 2,
+        "05": 1
+      },
+      "hole_sizes_mm": [
+        0.59944,
+        2.9997399999999996,
+        3.0987999999999998,
+        4.0005,
+        5.001259999999999
+      ],
+      "min_hole_size_mm": 0.59944,
+      "max_hole_size_mm": 5.001259999999999,
+      "hole_counts_by_size": {
+        "0.0236": 16,
+        "0.1181": 2,
+        "0.122": 4,
+        "0.1575": 2,
+        "0.1969": 1
+      },
+      "unique_hole_sizes": 5
+    },
+    "purpose": "Drill file defining hole locations and sizes for drill"
+  },
+  {
+    "filename": "Hydra105_drills_Plated.exc",
+    "file_type": "drill",
+    "file_size_kb": 2.44,
+    "format": "Excellon",
+    "drill_data": {
+      "success": true,
+      "file_path": "/Users/pasivuorio/agion/aspocomp-agents/agents/cam_gerber_analyzer/tools/../../../data/cam_gerber_analyzer/uploads/18/Hydra105_drills_Plated.exc",
+      "file_size": 2495,
+      "format": "Excellon",
+      "units": "IN",
+      "tools_count": 3,
+      "tools": {
+        "01": 0.0118,
+        "02": 0.0197,
+        "03": 0.0315
+      },
+      "total_holes": 178,
+      "holes_by_tool": {
+        "01": 150,
+        "02": 22,
+        "03": 6
+      },
+      "hole_sizes_mm": [
+        0.29972,
+        0.5003799999999999,
+        0.8000999999999999
+      ],
+      "min_hole_size_mm": 0.29972,
+      "max_hole_size_mm": 0.8000999999999999,
+      "hole_counts_by_size": {
+        "0.0118": 150,
+        "0.0197": 22,
+        "0.0315": 6
+      },
+      "unique_hole_sizes": 3
+    },
+    "purpose": "Drill file defining hole locations and sizes for drill"
+  },
+  {
+    "success": true,
+    "filename": "Hydra105_elec1.ger",
+    "file_type": "inner_layer_1",
+    "file_size_bytes": 363163,
+    "file_size_kb": 354.65,
+    "total_lines": 18157,
+    "total_characters": 345007,
+    "format": "RS-274X",
+    "units": "IN",
+    "aperture_definitions": 29,
+    "draw_commands_sample": 231,
+    "flash_commands": 0,
+    "move_commands": 6,
+    "llm_analysis": {
+      "layer_purpose": "Inner copper layer 1 (typically top-side copper)",
+      "manufacturing_function": "Defines copper traces, pads, and routing for this layer",
+      "key_characteristics": [
+        "Copper traces",
+        "Pads",
+        "Vias",
+        "Routing patterns",
+        "29 aperture definitions",
+        "231 draw commands (sample)"
+      ],
+      "manufacturing_processes": [
+        "Etching",
+        "Copper plating",
+        "Lamination"
+      ],
+      "file_category": "copper",
+      "notable_features": "RS-274X format, 5000 characters analyzed"
+    }
+  },
+  {
+    "success": true,
+    "filename": "Hydra105_elec2.ger",
+    "file_type": "inner_layer_2",
+    "file_size_bytes": 188807,
+    "file_size_kb": 184.38,
+    "total_lines": 9422,
+    "total_characters": 179386,
+    "format": "RS-274X",
+    "units": "IN",
+    "aperture_definitions": 7,
+    "draw_commands_sample": 252,
+    "flash_commands": 0,
+    "move_commands": 9,
+    "llm_analysis": {
+      "layer_purpose": "Inner copper layer 2",
+      "manufacturing_function": "Defines copper traces, pads, and routing for this layer",
+      "key_characteristics": [
+        "Copper traces",
+        "Pads",
+        "Vias",
+        "Routing patterns",
+        "7 aperture definitions",
+        "252 draw commands (sample)"
+      ],
+      "manufacturing_processes": [
+        "Etching",
+        "Copper plating",
+        "Lamination"
+      ],
+      "file_category": "copper",
+      "notable_features": "RS-274X format, 5000 characters analyzed"
+    }
+  },
+  {
+    "success": true,
+    "filename": "Hydra105_elec3.ger",
+    "file_type": "inner_layer_3",
+    "file_size_bytes": 195799,
+    "file_size_kb": 191.21,
+    "total_lines": 9774,
+    "total_characters": 186026,
+    "format": "RS-274X",
+    "units": "IN",
+    "aperture_definitions": 10,
+    "draw_commands_sample": 249,
+    "flash_commands": 0,
+    "move_commands": 9,
+    "llm_analysis": {
+      "layer_purpose": "Inner copper layer 3",
+      "manufacturing_function": "Defines copper traces, pads, and routing for this layer",
+      "key_characteristics": [
+        "Copper traces",
+        "Pads",
+        "Vias",
+        "Routing patterns",
+        "10 aperture definitions",
+        "249 draw commands (sample)"
+      ],
+      "manufacturing_processes": [
+        "Etching",
+        "Copper plating",
+        "Lamination"
+      ],
+      "file_category": "copper",
+      "notable_features": "RS-274X format, 5000 characters analyzed"
+    }
+  },
+  {
+    "success": true,
+    "filename": "Hydra105_elec4.ger",
+    "file_type": "inner_layer_4",
+    "file_size_bytes": 82222,
+    "file_size_kb": 80.29,
+    "total_lines": 4094,
+    "total_characters": 78129,
+    "format": "RS-274X",
+    "units": "IN",
+    "aperture_definitions": 9,
+    "draw_commands_sample": 249,
+    "flash_commands": 0,
+    "move_commands": 9,
+    "llm_analysis": {
+      "layer_purpose": "Inner copper layer 4 (typically bottom-side copper)",
+      "manufacturing_function": "Defines copper traces, pads, and routing for this layer",
+      "key_characteristics": [
+        "Copper traces",
+        "Pads",
+        "Vias",
+        "Routing patterns",
+        "9 aperture definitions",
+        "249 draw commands (sample)"
+      ],
+      "manufacturing_processes": [
+        "Etching",
+        "Copper plating",
+        "Lamination"
+      ],
+      "file_category": "copper",
+      "notable_features": "RS-274X format, 5000 characters analyzed"
+    }
+  },
+  {
+    "success": true,
+    "filename": "Hydra105_plating.ger",
+    "file_type": "plating",
+    "file_size_bytes": 90212,
+    "file_size_kb": 88.1,
+    "total_lines": 4448,
+    "total_characters": 85765,
+    "format": "RS-274X",
+    "units": "IN",
+    "aperture_definitions": 3,
+    "draw_commands_sample": 255,
+    "flash_commands": 0,
+    "move_commands": 9,
+    "llm_analysis": {
+      "layer_purpose": "Plating layer",
+      "manufacturing_function": "Defines areas requiring special plating treatment",
+      "key_characteristics": [
+        "Plated areas",
+        "Surface finish zones",
+        "3 aperture definitions",
+        "255 draw commands (sample)"
+      ],
+      "manufacturing_processes": [
+        "Electroplating",
+        "Surface finish application"
+      ],
+      "file_category": "plating",
+      "notable_features": "RS-274X format, 5000 characters analyzed"
+    }
+  },
+  {
+    "success": true,
+    "filename": "Hydra105_routing.ger",
+    "file_type": "outline",
+    "file_size_bytes": 68883,
+    "file_size_kb": 67.27,
+    "total_lines": 3421,
+    "total_characters": 65463,
+    "format": "RS-274X",
+    "units": "IN",
+    "aperture_definitions": 1,
+    "draw_commands_sample": 257,
+    "flash_commands": 0,
+    "move_commands": 9,
+    "llm_analysis": {
+      "layer_purpose": "Board outline and routing layer",
+      "manufacturing_function": "Defines the physical board outline and cutout areas",
+      "key_characteristics": [
+        "Board outline",
+        "Cutouts",
+        "V-score lines",
+        "Panel borders",
+        "1 aperture definitions",
+        "257 draw commands (sample)"
+      ],
+      "manufacturing_processes": [
+        "PCB routing",
+        "V-scoring",
+        "Panelization"
+      ],
+      "file_category": "outline",
+      "notable_features": "RS-274X format, 5000 characters analyzed"
+    }
+  },
+  {
+    "success": true,
+    "filename": "Hydra105_top_paste.ger",
+    "file_type": "paste_top",
+    "file_size_bytes": 91809,
+    "file_size_kb": 89.66,
+    "total_lines": 4606,
+    "total_characters": 87204,
+    "format": "RS-274X",
+    "units": "IN",
+    "aperture_definitions": 18,
+    "draw_commands_sample": 242,
+    "flash_commands": 0,
+    "move_commands": 93,
+    "llm_analysis": {
+      "layer_purpose": "Top solder paste stencil layer",
+      "manufacturing_function": "Defines solder paste application areas for SMT component assembly",
+      "key_characteristics": [
+        "SMT pad openings",
+        "Paste volume control",
+        "18 aperture definitions",
+        "242 draw commands (sample)"
+      ],
+      "manufacturing_processes": [
+        "Stencil fabrication",
+        "Solder paste printing",
+        "SMT assembly"
+      ],
+      "file_category": "paste",
+      "notable_features": "RS-274X format, 5000 characters analyzed"
+    }
+  },
+  {
+    "success": true,
+    "filename": "Hydra105_top_silk.ger",
+    "file_type": "silk_top",
+    "file_size_bytes": 421285,
+    "file_size_kb": 411.41,
+    "total_lines": 21494,
+    "total_characters": 399792,
+    "format": "RS-274X",
+    "units": "IN",
+    "aperture_definitions": 201,
+    "draw_commands_sample": 0,
+    "flash_commands": 0,
+    "move_commands": 0,
+    "llm_analysis": {
+      "layer_purpose": "Top silkscreen layer",
+      "manufacturing_function": "Defines component labels, reference designators, and markings printed on PCB",
+      "key_characteristics": [
+        "Component labels",
+        "Reference designators",
+        "Text markings",
+        "Logo/Graphics",
+        "201 aperture definitions"
+      ],
+      "manufacturing_processes": [
+        "Screen printing",
+        "Ink application"
+      ],
+      "file_category": "silkscreen",
+      "notable_features": "RS-274X format, 5000 characters analyzed"
+    }
+  },
+  {
+    "success": true,
+    "filename": "Hydra105_top_stop.ger",
+    "file_type": "solder_mask_top",
+    "file_size_bytes": 81445,
+    "file_size_kb": 79.54,
+    "total_lines": 4099,
+    "total_characters": 77347,
+    "format": "RS-274X",
+    "units": "IN",
+    "aperture_definitions": 27,
+    "draw_commands_sample": 231,
+    "flash_commands": 29,
+    "move_commands": 72,
+    "llm_analysis": {
+      "layer_purpose": "Top solder mask layer (solder stop)",
+      "manufacturing_function": "Defines areas where solder mask should NOT be applied (exposes pads)",
+      "key_characteristics": [
+        "Pad openings",
+        "Via openings",
+        "Solder mask clearance",
+        "27 aperture definitions",
+        "202 draw commands (sample)",
+        "29 flash commands (pads)"
+      ],
+      "manufacturing_processes": [
+        "Solder mask application",
+        "UV curing",
+        "Development"
+      ],
+      "file_category": "solder_mask",
+      "notable_features": "RS-274X format, 5000 characters analyzed"
+    }
+  }
+]

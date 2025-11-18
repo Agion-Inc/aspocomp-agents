@@ -29,6 +29,18 @@ class AgentRegistry:
                 print(f"[Agent Registry] Registered agent: {agent.agent_id}")
         except Exception as e:
             print(f"[Agent Registry] Failed to load Initiative Assistant: {e}")
+        
+        try:
+            # Import CAM Gerber Analyzer Agent
+            from agents.cam_gerber_analyzer import CamGerberAnalyzerAgent
+            from agents.cam_gerber_analyzer.config import AGENT_CONFIG as CAM_CONFIG
+            
+            agent = CamGerberAnalyzerAgent(CAM_CONFIG)
+            if agent.is_enabled():
+                self._agents[agent.agent_id] = agent
+                print(f"[Agent Registry] Registered agent: {agent.agent_id}")
+        except Exception as e:
+            print(f"[Agent Registry] Failed to load CAM Gerber Analyzer: {e}")
     
     def get_agent(self, agent_id: str) -> Optional[Any]:
         """Get agent by ID.
