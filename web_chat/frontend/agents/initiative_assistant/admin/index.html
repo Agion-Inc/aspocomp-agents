@@ -27,8 +27,10 @@
     <!-- Admin Interface -->
     <div id="admin-interface" class="admin-interface" style="display: none;">
         <header class="admin-header">
-            <h1>Initiative Assistant - Hallintapaneeli</h1>
-            <button id="logout-btn" class="btn btn-secondary">Kirjaudu ulos</button>
+            <div class="admin-header__top">
+                <h1>Initiative Assistant - Hallintapaneeli</h1>
+                <div id="user-info-container"></div>
+            </div>
         </header>
 
         <main class="admin-main">
@@ -95,6 +97,7 @@
         </div>
     </div>
 
+    <script src="/agents/js/user-info.js"></script>
     <script src="/agents/initiative_assistant/admin/js/api.js"></script>
     <script src="/agents/initiative_assistant/admin/js/app.js"></script>
 </body>

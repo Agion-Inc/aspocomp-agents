@@ -1,0 +1,349 @@
+/* SharePoint File Browser Component Styles */
+
+.sharepoint-file-browser {
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: 8px;
+    background-color: var(--color-bg-primary, #ffffff);
+    padding: var(--spacing-md, 16px);
+    margin: var(--spacing-md, 16px) 0;
+}
+
+.file-browser__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md, 16px);
+    padding-bottom: var(--spacing-sm, 8px);
+    border-bottom: 1px solid var(--color-border, #e5e5e5);
+}
+
+.file-browser__title {
+    font-size: var(--font-size-large, 18px);
+    font-weight: 600;
+    color: var(--color-black, #000000);
+    margin: 0;
+}
+
+.file-browser__actions {
+    display: flex;
+    gap: var(--spacing-sm, 8px);
+    align-items: center;
+}
+
+.file-browser__refresh-btn,
+.file-browser__upload-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs, 4px);
+    padding: var(--spacing-xs, 4px) var(--spacing-sm, 8px);
+    background-color: transparent;
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: 4px;
+    color: var(--color-black, #000000);
+    cursor: pointer;
+    font-size: var(--font-size-small, 14px);
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.file-browser__refresh-btn:hover,
+.file-browser__upload-btn:hover {
+    background-color: var(--color-gray-light, #e5e5e5);
+    border-color: var(--color-black, #000000);
+}
+
+.file-browser__refresh-btn svg,
+.file-browser__upload-btn svg {
+    flex-shrink: 0;
+}
+
+.file-browser__content {
+    min-height: 200px;
+}
+
+.file-browser__loading,
+.file-browser__error {
+    text-align: center;
+    padding: var(--spacing-xl, 32px);
+    color: var(--color-gray-medium, #666666);
+}
+
+.file-browser__error {
+    color: #d32f2f;
+}
+
+.file-browser__list {
+    display: grid;
+    gap: var(--spacing-sm, 8px);
+}
+
+.file-browser__item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md, 16px);
+    padding: var(--spacing-sm, 8px) var(--spacing-md, 16px);
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: 4px;
+    background-color: var(--color-bg-primary, #ffffff);
+    transition: background-color 0.2s, border-color 0.2s;
+    cursor: pointer;
+}
+
+.file-browser__item:hover {
+    background-color: var(--color-gray-ultra-light, #fafafa);
+    border-color: var(--color-black, #000000);
+}
+
+.file-browser__item--folder {
+    background-color: var(--color-gray-ultra-light, #fafafa);
+}
+
+.file-browser__item-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: var(--color-gray-medium, #666666);
+}
+
+.file-browser__item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.file-browser__item-name {
+    font-weight: 500;
+    color: var(--color-black, #000000);
+    margin-bottom: var(--spacing-xs, 4px);
+    word-break: break-word;
+}
+
+.file-browser__item-meta {
+    font-size: var(--font-size-small, 14px);
+    color: var(--color-gray-medium, #666666);
+    display: flex;
+    gap: var(--spacing-md, 16px);
+}
+
+.file-browser__item-actions {
+    display: flex;
+    gap: var(--spacing-xs, 4px);
+    flex-shrink: 0;
+}
+
+.file-browser__action-btn {
+    padding: var(--spacing-xs, 4px);
+    background-color: transparent;
+    border: none;
+    color: var(--color-gray-medium, #666666);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.file-browser__action-btn:hover {
+    background-color: var(--color-gray-light, #e5e5e5);
+    color: var(--color-black, #000000);
+}
+
+.file-browser__action-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Upload Modal */
+.file-browser__modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-browser__modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.file-browser__modal-content {
+    position: relative;
+    background-color: var(--color-bg-primary, #ffffff);
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.file-browser__modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg, 24px);
+    border-bottom: 1px solid var(--color-border, #e5e5e5);
+}
+
+.file-browser__modal-header h4 {
+    margin: 0;
+    font-size: var(--font-size-large, 18px);
+    font-weight: 600;
+    color: var(--color-black, #000000);
+}
+
+.file-browser__modal-close {
+    padding: var(--spacing-xs, 4px);
+    background-color: transparent;
+    border: none;
+    color: var(--color-gray-medium, #666666);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.file-browser__modal-close:hover {
+    background-color: var(--color-gray-light, #e5e5e5);
+}
+
+.file-browser__modal-body {
+    padding: var(--spacing-lg, 24px);
+}
+
+.file-browser__upload-area {
+    margin-bottom: var(--spacing-lg, 24px);
+}
+
+.file-browser__upload-dropzone {
+    border: 2px dashed var(--color-border, #e5e5e5);
+    border-radius: 8px;
+    padding: var(--spacing-xl, 32px);
+    text-align: center;
+    transition: border-color 0.2s, background-color 0.2s;
+    cursor: pointer;
+}
+
+.file-browser__upload-dropzone:hover {
+    border-color: var(--color-black, #000000);
+    background-color: var(--color-gray-ultra-light, #fafafa);
+}
+
+.file-browser__upload-dropzone svg {
+    color: var(--color-gray-medium, #666666);
+    margin-bottom: var(--spacing-md, 16px);
+}
+
+.file-browser__upload-dropzone p {
+    margin: var(--spacing-sm, 8px) 0;
+    color: var(--color-gray-medium, #666666);
+}
+
+.file-browser__select-btn {
+    margin-top: var(--spacing-md, 16px);
+    padding: var(--spacing-sm, 8px) var(--spacing-lg, 24px);
+    background-color: var(--color-black, #000000);
+    color: var(--color-white, #ffffff);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+.file-browser__select-btn:hover {
+    opacity: 0.8;
+}
+
+.file-browser__selected-files {
+    margin-top: var(--spacing-md, 16px);
+    padding: var(--spacing-md, 16px);
+    background-color: var(--color-gray-ultra-light, #fafafa);
+    border-radius: 4px;
+}
+
+.file-browser__selected-files ul {
+    list-style: none;
+    padding: 0;
+    margin: var(--spacing-sm, 8px) 0 0 0;
+}
+
+.file-browser__selected-files li {
+    padding: var(--spacing-xs, 4px) 0;
+    color: var(--color-black, #000000);
+}
+
+.file-browser__modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md, 16px);
+    margin-top: var(--spacing-lg, 24px);
+}
+
+.file-browser__cancel-btn,
+.file-browser__submit-btn {
+    padding: var(--spacing-sm, 8px) var(--spacing-lg, 24px);
+    border-radius: 4px;
+    border: 1px solid var(--color-border, #e5e5e5);
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.file-browser__cancel-btn {
+    background-color: transparent;
+    color: var(--color-black, #000000);
+}
+
+.file-browser__cancel-btn:hover {
+    background-color: var(--color-gray-light, #e5e5e5);
+}
+
+.file-browser__submit-btn {
+    background-color: var(--color-black, #000000);
+    color: var(--color-white, #ffffff);
+    border-color: var(--color-black, #000000);
+}
+
+.file-browser__submit-btn:hover:not(:disabled) {
+    opacity: 0.8;
+}
+
+.file-browser__submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .file-browser__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm, 8px);
+    }
+    
+    .file-browser__actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    
+    .file-browser__item {
+        flex-wrap: wrap;
+    }
+    
+    .file-browser__item-actions {
+        width: 100%;
+        justify-content: flex-end;
+        margin-top: var(--spacing-xs, 4px);
+    }
+    
+    .file-browser__modal-content {
+        width: 95%;
+        max-height: 95vh;
+    }
+}
+

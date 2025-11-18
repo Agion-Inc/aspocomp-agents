@@ -48,6 +48,36 @@ def is_api_key_configured() -> bool:
     return get_api_key() is not None
 
 
+def get_azure_client_id() -> Optional[str]:
+    """Get Azure AD client ID from environment variables."""
+    return os.environ.get("MICROSOFT_CLIENT_ID")
+
+
+def get_azure_client_secret() -> Optional[str]:
+    """Get Azure AD client secret from environment variables."""
+    return os.environ.get("MICROSOFT_CLIENT_SECRET")
+
+
+def get_azure_tenant_id() -> Optional[str]:
+    """Get Azure AD tenant ID from environment variables."""
+    return os.environ.get("MICROSOFT_TENANT_ID")
+
+
+def get_azure_redirect_uri() -> Optional[str]:
+    """Get Azure AD redirect URI from environment variables."""
+    return os.environ.get("MICROSOFT_REDIRECT_URI")
+
+
+def is_azure_auth_configured() -> bool:
+    """Check if Azure AD authentication is configured."""
+    return all([
+        get_azure_client_id(),
+        get_azure_client_secret(),
+        get_azure_tenant_id(),
+        get_azure_redirect_uri()
+    ])
+
+
 # Load environment files on import
 load_env_files()
 
