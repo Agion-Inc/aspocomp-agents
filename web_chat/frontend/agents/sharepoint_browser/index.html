@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SharePoint File Browser - Aspocomp</title>
+    <link rel="stylesheet" href="../../css/variables.css">
+    <link rel="stylesheet" href="../sharepoint-file-browser.css">
+    <style>
+        .sharepoint-browser-page {
+            min-height: 100vh;
+            background-color: var(--color-bg-primary);
+        }
+        
+        .sharepoint-browser-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--color-border);
+            background-color: var(--color-bg-primary);
+        }
+        
+        .sharepoint-browser-header__top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            gap: var(--spacing-md);
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--color-gray-medium);
+            text-decoration: none;
+            font-size: var(--font-size-small);
+            transition: color 0.2s;
+        }
+        
+        .back-link:hover {
+            color: var(--color-black);
+        }
+        
+        .sharepoint-browser-header h1 {
+            font-size: var(--font-size-large);
+            font-weight: 600;
+            color: var(--color-black);
+            margin: 0;
+        }
+        
+        .sharepoint-browser-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+    </style>
+</head>
+<body>
+    <div class="sharepoint-browser-page">
+        <header class="sharepoint-browser-header">
+            <div class="sharepoint-browser-header__top">
+                <a href="../" class="back-link">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6M3 12h12"/>
+                    </svg>
+                    Takaisin agentteihin
+                </a>
+                <div id="user-info-container"></div>
+            </div>
+            <h1>SharePoint File Browser</h1>
+        </header>
+        
+        <main class="sharepoint-browser-main">
+            <!-- SharePoint File Browser Component -->
+            <div class="sharepoint-file-browser" id="sharepoint-file-browser">
+                <div class="file-browser__header">
+                    <h3 class="file-browser__title">SharePoint Files</h3>
+                    <div class="file-browser__actions">
+                        <button class="file-browser__refresh-btn" id="refresh-files-btn" aria-label="Refresh">
+                            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 4v6h6M19 16v-6h-6M14 1l5 5-5 5M6 19l-5-5 5-5"/>
+                            </svg>
+                        </button>
+                        <button class="file-browser__upload-btn" id="upload-file-btn" aria-label="Upload file">
+                            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 8v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8M14 1l-5 5-5-5M9 6v10"/>
+                            </svg>
+                            Upload
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="file-browser__content">
+                    <div class="file-browser__loading" id="files-loading" style="display: none;">
+                        <p>Loading files...</p>
+                    </div>
+                    
+                    <div class="file-browser__error" id="files-error" style="display: none;">
+                        <p id="error-message"></p>
+                    </div>
+                    
+                    <div class="file-browser__list" id="files-list">
+                        <!-- Files will be loaded here -->
+                    </div>
+                </div>
+                
+                <!-- Upload Modal -->
+                <div class="file-browser__modal" id="upload-modal" style="display: none;">
+                    <div class="file-browser__modal-overlay"></div>
+                    <div class="file-browser__modal-content">
+                        <div class="file-browser__modal-header">
+                            <h4>Upload File to SharePoint</h4>
+                            <button class="file-browser__modal-close" id="close-upload-modal" aria-label="Close">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 5L5 15M5 5l10 10"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="file-browser__modal-body">
+                            <form id="upload-form" enctype="multipart/form-data">
+                                <div class="file-browser__upload-area" id="upload-area">
+                                    <input type="file" id="file-input" style="display: none;" multiple>
+                                    <div class="file-browser__upload-dropzone">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
+                                            <polyline points="17 8 12 3 7 8"></polyline>
+                                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                                        </svg>
+                                        <p>Drag and drop files here or click to select</p>
+                                        <button type="button" class="file-browser__select-btn" id="select-files-btn">Select Files</button>
+                                    </div>
+                                    <div class="file-browser__selected-files" id="selected-files" style="display: none;">
+                                        <p>Selected files:</p>
+                                        <ul id="selected-files-list"></ul>
+                                    </div>
+                                </div>
+                                <div class="file-browser__modal-actions">
+                                    <button type="button" class="file-browser__cancel-btn" id="cancel-upload-btn">Cancel</button>
+                                    <button type="submit" class="file-browser__submit-btn" id="submit-upload-btn" disabled>Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="../js/user-info.js"></script>
+    <script src="../sharepoint-file-browser.js"></script>
+</body>
+</html>
+

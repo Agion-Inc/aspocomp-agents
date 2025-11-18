@@ -10,8 +10,13 @@
 <body>
     <div class="agent-list-container">
         <header class="agent-list-header">
-            <h1>Aspocomp AI Agents</h1>
-            <p class="agent-list-subtitle">Valitse agentti käyttöön</p>
+            <div class="agent-list-header__content">
+                <div>
+                    <h1>Aspocomp AI Agents</h1>
+                    <p class="agent-list-subtitle">Valitse agentti käyttöön</p>
+                </div>
+                <div id="user-info-container"></div>
+            </div>
         </header>
         
         <main class="agent-list-main">
@@ -23,6 +28,7 @@
         </main>
     </div>
     
+    <script src="js/user-info.js"></script>
     <script src="js/agent-list.js"></script>
 </body>
 </html>

@@ -25,7 +25,23 @@ async function loadAgents() {
             return;
         }
         
-        agentGrid.innerHTML = agents.map(agent => `
+        // Add SharePoint File Browser card
+        const sharepointCard = `
+            <a href="sharepoint_browser/" class="agent-card">
+                <div class="agent-card__header">
+                    <h2 class="agent-card__title">SharePoint File Browser</h2>
+                    <span class="agent-card__status agent-card__status--available">
+                        Käytettävissä
+                    </span>
+                </div>
+                <p class="agent-card__description">Selaa, lataa ja hallitse SharePoint-tiedostoja</p>
+                <span class="agent-card__link">
+                    Avaa tiedostoselain →
+                </span>
+            </a>
+        `;
+        
+        const agentCards = agents.map(agent => `
             <a href="${agent.ui_path}" class="agent-card">
                 <div class="agent-card__header">
                     <h2 class="agent-card__title">${escapeHtml(agent.name)}</h2>
@@ -39,6 +55,8 @@ async function loadAgents() {
                 </span>
             </a>
         `).join('');
+        
+        agentGrid.innerHTML = sharepointCard + agentCards;
         
     } catch (error) {
         agentGrid.innerHTML = `

@@ -90,18 +90,24 @@ body {
     min-height: 100vh;
 }
 
+.admin-header__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-md, 1rem);
+    margin-bottom: var(--spacing-md, 1rem);
+}
+
 .admin-header {
     background: white;
     padding: 1.5rem 2rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
-.admin-header h1 {
+.admin-header__top h1 {
     font-size: 1.5rem;
     color: #333;
+    margin: 0;
 }
 
 .admin-main {
